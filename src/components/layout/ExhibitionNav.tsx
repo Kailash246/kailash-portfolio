@@ -3,7 +3,7 @@ import { useExhibition } from '../../context/ExhibitionContext';
 import { PERSONAL_INFO } from '../../data/portfolioData';
 import type { ExhibitionRoomId } from '../../types/exhibition';
 import { ModeSwitcher } from './ModeSwitcher';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const FULL_NAV_ITEMS: Array<{ id: ExhibitionRoomId; label: string }> = [
   { id: 'about', label: 'About' },
@@ -107,12 +107,6 @@ export const ExhibitionNav: React.FC = () => {
                 </span>
               </div>
             </button>
-
-            {/* University Status Badge - visible only on extra-wide screens to prevent cramming */}
-            <div className="hidden 2xl:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono text-neutral-600 bg-neutral-100 border border-neutral-200/70 whitespace-nowrap shrink-0">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-              <span>BCA @ ALLIANCE UNIVERSITY</span>
-            </div>
           </div>
 
           {/* Center Desktop Navigation Pills (Vercel Style) */}
@@ -123,7 +117,7 @@ export const ExhibitionNav: React.FC = () => {
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`px-2.5 xl:px-3.5 py-1.5 rounded-full text-xs font-sans font-medium tracking-tight whitespace-nowrap transition-all cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-black ${
+                  className={`px-2 xl:px-2.5 py-1 rounded-full text-xs font-sans font-medium tracking-tight whitespace-nowrap transition-all cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-black ${
                     isActive
                       ? 'bg-black text-white shadow-xs font-semibold'
                       : 'text-neutral-600 hover:text-black hover:bg-neutral-200/70'
@@ -176,15 +170,6 @@ export const ExhibitionNav: React.FC = () => {
                 <circle cx="4" cy="4" r="2"></circle>
               </svg>
             </a>
-
-            {/* Connect CTA Button */}
-            <button
-              onClick={() => scrollToRoom('contact')}
-              className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black hover:bg-neutral-800 text-white text-xs font-sans font-semibold transition-all shadow-2xs active:scale-95 cursor-pointer whitespace-nowrap shrink-0"
-            >
-              <span>Connect</span>
-              <ArrowUpRight size={13} />
-            </button>
 
             {/* Mobile Hamburger Toggle (Always prominently visible on mobile) */}
             <button

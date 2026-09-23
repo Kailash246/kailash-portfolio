@@ -81,7 +81,8 @@ export const PERSONAL_INFO = {
   fullName: 'Kailash Kumar B',
   roles: ['BCA Undergraduate', 'Full-Stack Developer', 'Tech Builder'],
   statement: 'Turning ideas into real-world impact through technology, creativity and consistent learning.',
-  bio: 'BCA student at Alliance University, Bangalore (CGPA: 7.5/10). Winner of 10 inter-collegiate hackathons and ideathons. Developer of FestNest (campus event discovery connecting students across India) and EliteQueue.',
+  bio: 'I’m a BCA student and builder focused on creating practical software, full-stack web applications, and real-world prototypes. I enjoy turning ideas into working products, learning new technologies and AI-powered tools, and using them to build faster, solve problems better, and continuously improve my workflow.',
+  quickBio: 'BCA student and builder focused on full-stack development, practical products, and AI-assisted workflows. I turn ideas into working software while continuously learning, experimenting, and improving how I build.',
 
   education: {
     degree: 'Bachelor of Computer Applications (BCA)',

@@ -48,9 +48,9 @@ export const AboutSection: React.FC = () => {
                 </span>
               </div>
 
-              {/* 2–4 short sentences */}
+              {/* Short Quick View Bio */}
               <p className="text-sm sm:text-base font-sans font-medium text-neutral-800 leading-relaxed">
-                I'm a BCA student at Alliance University, Bangalore, focused on building pragmatic full-stack web applications and hardware-software systems. I build software designed to eliminate friction in real campus communities and local operations.
+                BCA student and builder focused on full-stack development, practical products, and AI-assisted workflows. I turn ideas into working software while continuously learning, experimenting, and improving how I build.
               </p>
 
               {/* AI-Assisted Development / Productivity Highlight */}
@@ -180,13 +180,9 @@ export const AboutSection: React.FC = () => {
               </span>
             </div>
 
-            {/* Direct, Human Introduction (2-3 sentences) */}
+            {/* Direct, Human Introduction */}
             <p className="text-base sm:text-lg font-sans font-medium text-neutral-800 leading-relaxed pt-1">
-              I'm a BCA student at Alliance University in Bangalore. I build functional web applications and hardware-software systems designed to solve everyday bottlenecks on campus and for local communities.
-            </p>
-
-            <p className="text-xs sm:text-sm font-sans text-neutral-600 leading-relaxed">
-              My technical focus spans full-stack JavaScript and Python, relational database design, and real-time sensor telemetry. I prioritize building software that gets deployed and used in the real world over passive classroom theory.
+              I’m a BCA student and builder focused on creating practical software, full-stack web applications, and real-world prototypes. I enjoy turning ideas into working products, learning new technologies and AI-powered tools, and using them to build faster, solve problems better, and continuously improve my workflow.
             </p>
 
             {/* Verifiable 1M1B Green Internship Banner */}
