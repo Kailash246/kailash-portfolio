@@ -82,7 +82,6 @@ export const PERSONAL_INFO = {
   roles: ['BCA Undergraduate', 'Full-Stack Developer', 'Tech Builder'],
   statement: 'Turning ideas into real-world impact through technology, creativity and consistent learning.',
   bio: 'BCA student at Alliance University, Bangalore (CGPA: 7.5/10). Winner of 10 inter-collegiate hackathons and ideathons. Developer of FestNest (campus event discovery connecting students across India) and EliteQueue.',
-  phone: '+91 8088309340',
 
   education: {
     degree: 'Bachelor of Computer Applications (BCA)',
@@ -114,7 +113,6 @@ export const PERSONAL_INFO = {
   socialLinks: {
     email: 'kailashkumarm241@gmail.com',
     academicEmail: 'kkailashBCA24@ced.alliance.edu.in',
-    phone: '+91 8088309340',
     github: 'https://github.com/Kailash246',
     linkedin: 'https://www.linkedin.com/in/kailash-kumar-5209b02a8/',
     hackerrank: 'https://www.hackerrank.com/profile/kailashkumarrea1',
