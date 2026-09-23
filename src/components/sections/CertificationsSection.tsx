@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { RoomHeader } from '../layout/RoomHeader';
 import { CERTIFICATIONS_DATA } from '../../data/portfolioData';
-import { useExhibition } from '../../context/ExhibitionContext';
 import type { CertificationCategory } from '../../types/exhibition';
 import { 
   ExternalLink, 
@@ -177,14 +176,9 @@ const CATEGORIES: Array<{ id: CertificationCategory; label: string }> = [
 ];
 
 export const CertificationsSection: React.FC = () => {
-  const { viewMode } = useExhibition();
   const [selectedCategory, setSelectedCategory] = useState<CertificationCategory>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
   const [copiedId, setCopiedId] = useState<string | null>(null);
-
-  if (viewMode === 'quick') {
-    return null;
-  }
 
   // Filtered certifications
   const filteredCerts = useMemo(() => {

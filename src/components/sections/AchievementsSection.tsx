@@ -208,6 +208,56 @@ export const AchievementsSection: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [inspectItem, setInspectItem] = useState<AchievementItem | null>(null);
+  const [showAll, setShowAll] = useState(false);
+
+  // Filtered list
+  const filteredItems = useMemo(() => {
+    return ACHIEVEMENTS_DATA.filter((item) => {
+      const matchesTab = activeTab === 'ALL' || item.rank === activeTab;
+      const q = searchQuery.toLowerCase().trim();
+      const matchesQuery = 
+        !q ||
+        item.title.toLowerCase().includes(q) ||
+        item.institution.toLowerCase().includes(q) ||
+        item.category.toLowerCase().includes(q) ||
+        (item.discipline && item.discipline.toLowerCase().includes(q)) ||
+        (item.highlight && item.highlight.toLowerCase().includes(q)) ||
+        item.rankLabel.toLowerCase().includes(q);
+      return matchesTab && matchesQuery;
+    });
+  }, [activeTab, searchQuery]);
+
+  // Lock background scrolling and pause Lenis when certificate inspect modal is open
+  useEffect(() => {
+    if (!inspectItem) return;
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+    
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    (window as any).__lenis?.stop();
+
+    return () => {
+      document.body.style.overflow = originalBodyOverflow;
+      document.documentElement.style.overflow = originalHtmlOverflow;
+      (window as any).__lenis?.start();
+    };
+  }, [inspectItem]);
+
+  const displayedItems = useMemo(() => {
+    if (showAll || searchQuery || activeTab !== 'ALL') {
+      return filteredItems;
+    }
+    return filteredItems.slice(0, 6);
+  }, [filteredItems, showAll, searchQuery, activeTab]);
+
+  const handleCopy = (e: React.MouseEvent, url: string, id: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigator.clipboard.writeText(url);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 1800);
+  };
 
   if (viewMode === 'quick') {
     const quickItems = ACHIEVEMENTS_DATA.slice(0, 4);
@@ -316,57 +366,6 @@ export const AchievementsSection: React.FC = () => {
       </section>
     );
   }
-
-  // Filtered list
-  const filteredItems = useMemo(() => {
-    return ACHIEVEMENTS_DATA.filter((item) => {
-      const matchesTab = activeTab === 'ALL' || item.rank === activeTab;
-      const q = searchQuery.toLowerCase().trim();
-      const matchesQuery = 
-        !q ||
-        item.title.toLowerCase().includes(q) ||
-        item.institution.toLowerCase().includes(q) ||
-        item.category.toLowerCase().includes(q) ||
-        (item.discipline && item.discipline.toLowerCase().includes(q)) ||
-        (item.highlight && item.highlight.toLowerCase().includes(q)) ||
-        item.rankLabel.toLowerCase().includes(q);
-      return matchesTab && matchesQuery;
-    });
-  }, [activeTab, searchQuery]);
-
-  const [showAll, setShowAll] = useState(false);
-
-  // Lock background scrolling and pause Lenis when certificate inspect modal is open
-  useEffect(() => {
-    if (!inspectItem) return;
-    const originalBodyOverflow = document.body.style.overflow;
-    const originalHtmlOverflow = document.documentElement.style.overflow;
-    
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
-    (window as any).__lenis?.stop();
-
-    return () => {
-      document.body.style.overflow = originalBodyOverflow;
-      document.documentElement.style.overflow = originalHtmlOverflow;
-      (window as any).__lenis?.start();
-    };
-  }, [inspectItem]);
-
-  const displayedItems = useMemo(() => {
-    if (showAll || searchQuery || activeTab !== 'ALL') {
-      return filteredItems;
-    }
-    return filteredItems.slice(0, 6);
-  }, [filteredItems, showAll, searchQuery, activeTab]);
-
-  const handleCopy = (e: React.MouseEvent, url: string, id: string) => {
-    e.preventDefault();
-    e.stopPropagation();
-    navigator.clipboard.writeText(url);
-    setCopiedId(id);
-    setTimeout(() => setCopiedId(null), 1800);
-  };
 
   return (
     <section

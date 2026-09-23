@@ -1,15 +1,9 @@
 import React from 'react';
 import { RoomHeader } from '../layout/RoomHeader';
 import { PHILOSOPHY_MANIFESTO } from '../../data/portfolioData';
-import { useExhibition } from '../../context/ExhibitionContext';
 import { Terminal } from 'lucide-react';
 
 export const PhilosophySection: React.FC = () => {
-  const { viewMode } = useExhibition();
-
-  if (viewMode === 'quick') {
-    return null;
-  }
   return (
     <section
       id="philosophy"

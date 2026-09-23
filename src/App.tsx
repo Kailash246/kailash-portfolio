@@ -105,10 +105,10 @@ const ExhibitionContent: React.FC = () => {
         <AboutSection />
         <ProjectsSection />
         <ExpertiseSection />
-        <CertificationsSection />
+        {viewMode !== 'quick' && <CertificationsSection />}
         <AchievementsSection />
-        <JourneySection />
-        <PhilosophySection />
+        {viewMode !== 'quick' && <JourneySection />}
+        {viewMode !== 'quick' && <PhilosophySection />}
         <ContactSection />
       </main>
 
