@@ -22,7 +22,7 @@ export const ModeSwitcher: React.FC<ModeSwitcherProps> = ({ className = '', isCo
         aria-selected={viewMode === 'full'}
         onClick={() => setViewMode('full')}
         className={`flex items-center gap-1.5 rounded-full text-[10px] sm:text-xs font-mono tracking-tight transition-all duration-200 cursor-pointer ${
-          isCompact ? 'px-2 py-1' : 'px-2.5 sm:px-3 py-1 sm:py-1.5'
+          isCompact ? 'px-2 py-1 text-[10px]' : 'px-2.5 sm:px-3 py-1 sm:py-1.5'
         } ${
           viewMode === 'full'
             ? 'bg-black text-white font-bold shadow-xs'
@@ -30,8 +30,8 @@ export const ModeSwitcher: React.FC<ModeSwitcherProps> = ({ className = '', isCo
         }`}
         title="Switch to Full View (Comprehensive Portfolio)"
       >
-        <Layers size={11} className={viewMode === 'full' ? 'text-white' : 'text-neutral-500'} />
-        <span>FULL VIEW</span>
+        <Layers size={isCompact ? 10 : 11} className={viewMode === 'full' ? 'text-white' : 'text-neutral-500'} />
+        <span>{isCompact ? 'FULL' : 'FULL VIEW'}</span>
       </button>
 
       {/* Quick View Button */}
@@ -40,7 +40,7 @@ export const ModeSwitcher: React.FC<ModeSwitcherProps> = ({ className = '', isCo
         aria-selected={viewMode === 'quick'}
         onClick={() => setViewMode('quick')}
         className={`flex items-center gap-1.5 rounded-full text-[10px] sm:text-xs font-mono tracking-tight transition-all duration-200 cursor-pointer ${
-          isCompact ? 'px-2 py-1' : 'px-2.5 sm:px-3 py-1 sm:py-1.5'
+          isCompact ? 'px-2 py-1 text-[10px]' : 'px-2.5 sm:px-3 py-1 sm:py-1.5'
         } ${
           viewMode === 'quick'
             ? 'bg-black text-white font-bold shadow-xs'
@@ -48,8 +48,8 @@ export const ModeSwitcher: React.FC<ModeSwitcherProps> = ({ className = '', isCo
         }`}
         title="Switch to Quick View (High-Signal Recruiter Summary)"
       >
-        <Sparkles size={11} className={viewMode === 'quick' ? 'text-amber-300' : 'text-neutral-500'} />
-        <span>QUICK VIEW</span>
+        <Sparkles size={isCompact ? 10 : 11} className={viewMode === 'quick' ? 'text-amber-300' : 'text-neutral-500'} />
+        <span>{isCompact ? 'QUICK' : 'QUICK VIEW'}</span>
       </button>
     </div>
   );

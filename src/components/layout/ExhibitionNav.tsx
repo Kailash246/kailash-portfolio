@@ -3,7 +3,7 @@ import { useExhibition } from '../../context/ExhibitionContext';
 import { PERSONAL_INFO } from '../../data/portfolioData';
 import type { ExhibitionRoomId } from '../../types/exhibition';
 import { ModeSwitcher } from './ModeSwitcher';
-import { Wind, Play, Menu, X, ArrowUpRight } from 'lucide-react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 
 const FULL_NAV_ITEMS: Array<{ id: ExhibitionRoomId; label: string }> = [
   { id: 'about', label: 'About' },
@@ -28,8 +28,6 @@ export const ExhibitionNav: React.FC = () => {
   const {
     activeRoom,
     scrollToRoom,
-    reducedMotion,
-    toggleReducedMotion,
     viewMode,
   } = useExhibition();
 
@@ -104,7 +102,7 @@ export const ExhibitionNav: React.FC = () => {
                 <span className="text-xs font-sans font-bold tracking-tight text-neutral-900 leading-none">
                   KAILASH KUMAR
                 </span>
-                <span className="text-[10px] font-mono tracking-wider text-neutral-500 uppercase mt-0.5">
+                <span className="hidden sm:block text-[10px] font-mono tracking-wider text-neutral-500 uppercase mt-0.5">
                   STUDENT & BUILDER
                 </span>
               </div>
@@ -179,23 +177,6 @@ export const ExhibitionNav: React.FC = () => {
               </svg>
             </a>
 
-            {/* Motion Toggle Button */}
-            <button
-              onClick={toggleReducedMotion}
-              aria-label={`Toggle motion mode. Currently ${reducedMotion ? 'reduced' : 'standard'}`}
-              title={`Motion Animation: ${reducedMotion ? 'Reduced' : 'Full Animation'}`}
-              className={`p-2 rounded-full border text-xs font-mono flex items-center gap-1.5 cursor-pointer transition-all outline-none focus-visible:ring-2 focus-visible:ring-black shrink-0 whitespace-nowrap shadow-3xs ${
-                reducedMotion
-                  ? 'bg-black text-white border-black'
-                  : 'bg-white text-neutral-600 border-neutral-200 hover:border-black hover:text-black'
-              }`}
-            >
-              {reducedMotion ? <Wind size={14} /> : <Play size={14} className="fill-current" />}
-              <span className="hidden 2xl:inline text-[11px] font-mono uppercase tracking-wider whitespace-nowrap">
-                {reducedMotion ? 'Reduced' : 'Motion: On'}
-              </span>
-            </button>
-
             {/* Connect CTA Button */}
             <button
               onClick={() => scrollToRoom('contact')}
@@ -205,11 +186,11 @@ export const ExhibitionNav: React.FC = () => {
               <ArrowUpRight size={13} />
             </button>
 
-            {/* Mobile Hamburger Toggle */}
+            {/* Mobile Hamburger Toggle (Always prominently visible on mobile) */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle Navigation Menu"
-              className="lg:hidden p-2 rounded-full bg-white border border-neutral-200 text-neutral-900 hover:border-black cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-black shrink-0"
+              className="lg:hidden p-2 rounded-full bg-white border border-neutral-300 text-neutral-900 hover:border-black active:bg-neutral-100 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-black shrink-0 min-h-[38px] min-w-[38px] flex items-center justify-center shadow-xs ml-1"
             >
               {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
@@ -280,12 +261,7 @@ export const ExhibitionNav: React.FC = () => {
           {/* Bottom strip */}
           <div className="pt-4 border-t border-neutral-200 flex items-center justify-between text-xs font-mono text-neutral-500 shrink-0">
             <span className="truncate">KAILASH KUMAR • BCA</span>
-            <button
-              onClick={toggleReducedMotion}
-              className="text-xs font-mono text-black font-bold underline cursor-pointer p-2 min-h-[44px] flex items-center"
-            >
-              {reducedMotion ? 'Motion: Off' : 'Motion: On'}
-            </button>
+            <span className="text-[11px] font-mono text-neutral-400">CED, ALLIANCE UNIVERSITY</span>
           </div>
         </div>
       )}
