@@ -1,15 +1,151 @@
 import React, { useState } from 'react';
 import { RoomHeader } from '../layout/RoomHeader';
 import { PERSONAL_INFO } from '../../data/portfolioData';
-import { Mail, Copy, Check, ArrowUpRight, MapPin, Phone, GraduationCap } from 'lucide-react';
+import { 
+  Mail, 
+  Copy, 
+  Check, 
+  ArrowUpRight, 
+  MapPin, 
+  Phone, 
+  GraduationCap, 
+  Send, 
+  Loader2, 
+  CheckCircle2, 
+  AlertCircle 
+} from 'lucide-react';
 
 export const ContactSection: React.FC = () => {
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+
+  // Web3Forms Form State
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [subject, setSubject] = useState('');
+  const [message, setMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState<{
+    type: 'success' | 'error' | null;
+    message: string;
+  }>({ type: null, message: '' });
 
   const handleCopy = (text: string, key: string) => {
     navigator.clipboard.writeText(text);
     setCopiedKey(key);
     setTimeout(() => setCopiedKey(null), 2200);
+  };
+
+  // Reset status feedback as soon as the user starts typing again
+  const handleInputChange = (setter: React.Dispatch<React.SetStateAction<string>>) => (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    if (status.type) {
+      setStatus({ type: null, message: '' });
+    }
+    setter(e.target.value);
+  };
+
+  // Handle Form Submission to Web3Forms
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // Prevent accidental double submission
+    if (isSubmitting) return;
+
+    // Spam honeypot check
+    const botcheckInput = e.currentTarget.elements.namedItem('botcheck') as HTMLInputElement | null;
+    if (botcheckInput?.checked) return;
+
+    // Reset status
+    setStatus({ type: null, message: '' });
+
+    // Validate Required Fields
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+    const trimmedSubject = subject.trim();
+    const trimmedMessage = message.trim();
+
+    if (!trimmedName) {
+      setStatus({ type: 'error', message: 'Please enter your name.' });
+      return;
+    }
+
+    if (!trimmedEmail) {
+      setStatus({ type: 'error', message: 'Please enter your email address.' });
+      return;
+    }
+
+    // Validate Email Address
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedEmail)) {
+      setStatus({ type: 'error', message: 'Please enter a valid email address.' });
+      return;
+    }
+
+    if (!trimmedSubject) {
+      setStatus({ type: 'error', message: 'Please enter a subject.' });
+      return;
+    }
+
+    if (!trimmedMessage) {
+      setStatus({ type: 'error', message: 'Please enter your message.' });
+      return;
+    }
+
+    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+    if (!accessKey) {
+      setStatus({
+        type: 'error',
+        message: 'Web3Forms access key not found. Please check VITE_WEB3FORMS_ACCESS_KEY.',
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: trimmedName,
+          email: trimmedEmail,
+          subject: `[Portfolio Contact] ${trimmedSubject}`,
+          message: trimmedMessage,
+          from_name: 'Kailash Portfolio',
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setStatus({
+          type: 'success',
+          message: 'Message sent successfully.',
+        });
+        // Clear form after successful submission
+        setName('');
+        setEmail('');
+        setSubject('');
+        setMessage('');
+      } else {
+        setStatus({
+          type: 'error',
+          message: data.message || 'Something went wrong. Please try again.',
+        });
+      }
+    } catch {
+      setStatus({
+        type: 'error',
+        message: 'Something went wrong. Please try again.',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const codingProfiles = [
@@ -75,8 +211,161 @@ export const ContactSection: React.FC = () => {
             </h3>
 
             <p className="text-xs sm:text-sm font-sans text-neutral-600 leading-relaxed max-w-lg">
-              Have an internship opportunity, a project to architect, or an engineering role to discuss? Reach out directly via email, phone, or verified coding profiles.
+              Have an internship opportunity, a project to architect, or an engineering role to discuss? Send a direct message or reach out via email, phone, or verified profiles below.
             </p>
+
+            {/* Functional Web3Forms Contact Form */}
+            <form onSubmit={handleSubmit} noValidate className="space-y-3.5 pt-2">
+              {/* Spam Honeypot */}
+              <input
+                type="checkbox"
+                name="botcheck"
+                className="hidden"
+                style={{ display: 'none' }}
+                tabIndex={-1}
+                autoComplete="off"
+              />
+
+              {/* Name & Email Inputs */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <label
+                    htmlFor="contact-name"
+                    className="text-[10px] font-mono font-bold text-neutral-500 uppercase tracking-wider block"
+                  >
+                    YOUR NAME <span className="text-rose-500">*</span>
+                  </label>
+                  <input
+                    id="contact-name"
+                    type="text"
+                    name="name"
+                    value={name}
+                    onChange={handleInputChange(setName)}
+                    placeholder="e.g. Sarah Jenkins"
+                    required
+                    disabled={isSubmitting}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-neutral-200 text-xs sm:text-sm font-sans text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:border-neutral-900 focus:ring-1 focus:ring-neutral-900 transition-all shadow-3xs disabled:opacity-60 disabled:cursor-not-allowed"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label
+                    htmlFor="contact-email"
+                    className="text-[10px] font-mono font-bold text-neutral-500 uppercase tracking-wider block"
+                  >
+                    EMAIL ADDRESS <span className="text-rose-500">*</span>
+                  </label>
+                  <input
+                    id="contact-email"
+                    type="email"
+                    name="email"
+                    value={email}
+                    onChange={handleInputChange(setEmail)}
+                    placeholder="e.g. sarah@company.com"
+                    required
+                    disabled={isSubmitting}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-neutral-200 text-xs sm:text-sm font-sans text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:border-neutral-900 focus:ring-1 focus:ring-neutral-900 transition-all shadow-3xs disabled:opacity-60 disabled:cursor-not-allowed"
+                  />
+                </div>
+              </div>
+
+              {/* Subject Input */}
+              <div className="space-y-1.5">
+                <label
+                  htmlFor="contact-subject"
+                  className="text-[10px] font-mono font-bold text-neutral-500 uppercase tracking-wider block"
+                >
+                  SUBJECT <span className="text-rose-500">*</span>
+                </label>
+                <input
+                  id="contact-subject"
+                  type="text"
+                  name="subject"
+                  value={subject}
+                  onChange={handleInputChange(setSubject)}
+                  placeholder="e.g. Software Engineering Internship Inquiry"
+                  required
+                  disabled={isSubmitting}
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-neutral-200 text-xs sm:text-sm font-sans text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:border-neutral-900 focus:ring-1 focus:ring-neutral-900 transition-all shadow-3xs disabled:opacity-60 disabled:cursor-not-allowed"
+                />
+              </div>
+
+              {/* Message Textarea */}
+              <div className="space-y-1.5">
+                <label
+                  htmlFor="contact-message"
+                  className="text-[10px] font-mono font-bold text-neutral-500 uppercase tracking-wider block"
+                >
+                  MESSAGE <span className="text-rose-500">*</span>
+                </label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  value={message}
+                  onChange={handleInputChange(setMessage)}
+                  rows={4}
+                  placeholder="Tell me about your team, the opportunity, or what you'd like to collaborate on..."
+                  required
+                  disabled={isSubmitting}
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-neutral-200 text-xs sm:text-sm font-sans text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:border-neutral-900 focus:ring-1 focus:ring-neutral-900 transition-all shadow-3xs disabled:opacity-60 disabled:cursor-not-allowed resize-none"
+                />
+              </div>
+
+              {/* Inline Status Message */}
+              {status.type === 'success' && (
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs sm:text-sm font-mono flex items-center gap-2.5 transition-all shadow-3xs"
+                >
+                  <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+                  <span className="font-medium">{status.message}</span>
+                </div>
+              )}
+
+              {status.type === 'error' && (
+                <div
+                  role="alert"
+                  aria-live="assertive"
+                  className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-900 text-xs sm:text-sm font-mono flex items-center gap-2.5 transition-all shadow-3xs"
+                >
+                  <AlertCircle size={16} className="text-rose-600 shrink-0" />
+                  <span className="font-medium">{status.message}</span>
+                </div>
+              )}
+
+              {/* Submit Button */}
+              <div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full sm:w-auto px-6 py-3 min-h-[44px] rounded-xl bg-black hover:bg-neutral-800 disabled:bg-neutral-600 text-white text-xs sm:text-sm font-mono font-medium transition-all flex items-center justify-center gap-2 shadow-3xs cursor-pointer disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 size={15} className="animate-spin text-white shrink-0" />
+                      <span>Sending...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Send Message</span>
+                      <Send size={13} className="shrink-0" />
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+
+            {/* Separator to Direct Contact Cards */}
+            <div className="pt-2">
+              <div className="flex items-center gap-3">
+                <div className="h-px bg-neutral-200 flex-1" />
+                <span className="text-[10px] font-mono font-bold text-neutral-400 uppercase tracking-wider">
+                  OR REACH OUT DIRECTLY
+                </span>
+                <div className="h-px bg-neutral-200 flex-1" />
+              </div>
+            </div>
 
             {/* Direct Contact Cards */}
             <div className="space-y-3 pt-1 sm:pt-2">
