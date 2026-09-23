@@ -142,7 +142,7 @@ export const ExpertiseSection: React.FC = () => {
     <section
       id="expertise"
       aria-label="Section 03: Skills & Technologies"
-      className="py-20 sm:py-28 px-4 sm:px-8 max-w-7xl mx-auto border-t border-neutral-100"
+      className="py-12 sm:py-28 px-3 sm:px-8 max-w-7xl mx-auto border-t border-neutral-100"
     >
       <RoomHeader
         index="03"
@@ -153,19 +153,21 @@ export const ExpertiseSection: React.FC = () => {
       />
 
       {/* Visual Full-Stack System Architecture Diagram */}
-      <div className="mb-12 p-6 sm:p-8 rounded-3xl bg-neutral-950 text-white border border-neutral-800 shadow-xl overflow-hidden">
-        <div className="flex flex-wrap items-center justify-between gap-3 pb-5 mb-6 border-b border-neutral-800 text-xs font-mono">
+      <div className="mb-8 sm:mb-12 p-4 sm:p-8 rounded-3xl bg-neutral-950 text-white border border-neutral-800 shadow-xl overflow-hidden">
+        <div className="flex flex-wrap items-center justify-between gap-2.5 pb-4 sm:pb-5 mb-5 sm:mb-6 border-b border-neutral-800 text-xs font-mono">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-neutral-300">FULL-STACK SYSTEM ARCHITECTURE MAP</span>
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+            <span className="text-[10px] sm:text-xs text-neutral-300 break-words font-semibold">
+              FULL-STACK SYSTEM ARCHITECTURE MAP
+            </span>
           </div>
-          <span className="text-neutral-500">END-TO-END FLOW</span>
+          <span className="text-[10px] sm:text-xs text-neutral-500 shrink-0">END-TO-END FLOW</span>
         </div>
 
         {/* Visual Diagram Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3 sm:gap-4 text-center">
           {/* Layer 1: Client / Web */}
-          <div className="p-4 rounded-2xl bg-neutral-900 border border-neutral-800 flex flex-col items-center justify-between">
+          <div className="p-3.5 sm:p-4 rounded-2xl bg-neutral-900 border border-neutral-800 flex flex-col items-center justify-between">
             <div className="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-2">
               <Globe size={20} />
             </div>
@@ -178,7 +180,7 @@ export const ExpertiseSection: React.FC = () => {
           </div>
 
           {/* Layer 2: API & Logic */}
-          <div className="p-4 rounded-2xl bg-neutral-900 border border-neutral-800 flex flex-col items-center justify-between">
+          <div className="p-3.5 sm:p-4 rounded-2xl bg-neutral-900 border border-neutral-800 flex flex-col items-center justify-between">
             <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-2">
               <Server size={20} />
             </div>
@@ -191,7 +193,7 @@ export const ExpertiseSection: React.FC = () => {
           </div>
 
           {/* Layer 3: Database & State */}
-          <div className="p-4 rounded-2xl bg-neutral-900 border border-neutral-800 flex flex-col items-center justify-between">
+          <div className="p-3.5 sm:p-4 rounded-2xl bg-neutral-900 border border-neutral-800 flex flex-col items-center justify-between">
             <div className="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-2">
               <Database size={20} />
             </div>
@@ -204,7 +206,7 @@ export const ExpertiseSection: React.FC = () => {
           </div>
 
           {/* Layer 4: Hardware & IoT */}
-          <div className="p-4 rounded-2xl bg-neutral-900 border border-neutral-800 flex flex-col items-center justify-between">
+          <div className="p-3.5 sm:p-4 rounded-2xl bg-neutral-900 border border-neutral-800 flex flex-col items-center justify-between">
             <div className="w-10 h-10 rounded-xl bg-orange-500/10 text-orange-400 flex items-center justify-center mb-2">
               <Cpu size={20} />
             </div>
@@ -219,7 +221,7 @@ export const ExpertiseSection: React.FC = () => {
       </div>
 
       {/* Clean Category Filter & Search Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-neutral-100">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8 pb-4 border-b border-neutral-100">
         <div className="flex items-center gap-2 text-xs font-mono text-neutral-500">
           <span className="w-2 h-2 rounded-full bg-black" />
           <span className="font-bold text-neutral-900 uppercase">CURATED TOOLKIT</span>
@@ -234,7 +236,7 @@ export const ExpertiseSection: React.FC = () => {
             placeholder="Quick search skill..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-1.5 rounded-full bg-neutral-50 border border-neutral-200 text-xs font-sans text-black placeholder:text-neutral-400 outline-none focus:border-black focus:bg-white transition-colors"
+            className="w-full pl-9 pr-3 py-2 rounded-full bg-neutral-50 border border-neutral-200 text-xs font-sans text-black placeholder:text-neutral-400 outline-none focus:border-black focus:bg-white transition-colors min-h-[38px]"
           />
         </div>
       </div>
@@ -247,7 +249,7 @@ export const ExpertiseSection: React.FC = () => {
           return (
             <div
               key={cat.id}
-              className="p-6 rounded-2xl bg-white border border-neutral-200/90 hover:border-black transition-all hover:shadow-md flex flex-col justify-between group"
+              className="p-4 sm:p-6 rounded-2xl bg-white border border-neutral-200/90 hover:border-black transition-all hover:shadow-md flex flex-col justify-between group"
             >
               <div>
                 {/* Header */}

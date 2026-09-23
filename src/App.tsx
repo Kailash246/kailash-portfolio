@@ -31,6 +31,8 @@ const ExhibitionContent: React.FC = () => {
       smoothWheel: true,
     });
 
+    (window as any).__lenis = lenis;
+
     function raf(time: number) {
       lenis.raf(time);
       requestAnimationFrame(raf);
@@ -41,6 +43,7 @@ const ExhibitionContent: React.FC = () => {
     return () => {
       cancelAnimationFrame(rafId);
       lenis.destroy();
+      delete (window as any).__lenis;
     };
   }, [reducedMotion]);
 

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { RoomHeader } from '../layout/RoomHeader';
 import { ACHIEVEMENTS_DATA } from '../../data/portfolioData';
 import type { AchievementItem } from '../../types/exhibition';
@@ -225,6 +225,23 @@ export const AchievementsSection: React.FC = () => {
 
   const [showAll, setShowAll] = useState(false);
 
+  // Lock background scrolling and pause Lenis when certificate inspect modal is open
+  useEffect(() => {
+    if (!inspectItem) return;
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+    
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    (window as any).__lenis?.stop();
+
+    return () => {
+      document.body.style.overflow = originalBodyOverflow;
+      document.documentElement.style.overflow = originalHtmlOverflow;
+      (window as any).__lenis?.start();
+    };
+  }, [inspectItem]);
+
   const displayedItems = useMemo(() => {
     if (showAll || searchQuery || activeTab !== 'ALL') {
       return filteredItems;
@@ -244,7 +261,7 @@ export const AchievementsSection: React.FC = () => {
     <section
       id="achievements"
       aria-label="Section 05: Achievements & Milestones"
-      className="py-14 sm:py-20 px-4 sm:px-8 max-w-7xl mx-auto border-t border-neutral-100"
+      className="py-12 sm:py-20 px-3 sm:px-8 max-w-7xl mx-auto border-t border-neutral-100"
     >
       <RoomHeader
         index="05"
@@ -255,14 +272,14 @@ export const AchievementsSection: React.FC = () => {
       />
 
       {/* Sleek Header Strip */}
-      <div className="flex flex-wrap items-center justify-between gap-3 py-3 px-4 sm:px-5 rounded-2xl bg-neutral-50 border border-neutral-200/80 mb-6 text-xs font-mono">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="font-bold text-neutral-900">10 VERIFIED COMPETITIVE PODIUM WINS</span>
+      <div className="flex flex-wrap items-center justify-between gap-2.5 py-2.5 sm:py-3 px-3.5 sm:px-5 rounded-2xl bg-neutral-50 border border-neutral-200/80 mb-5 sm:mb-6 text-xs font-mono">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+          <span className="font-bold text-neutral-900 text-[11px] sm:text-xs">10 VERIFIED COMPETITIVE PODIUM WINS</span>
           <span className="hidden sm:inline text-neutral-400">•</span>
           <span className="hidden sm:inline text-neutral-600">6x 🥇 1st Place & 4x 🥈 2nd Place</span>
         </div>
-        <span className="text-emerald-700 font-semibold bg-emerald-100/70 px-2.5 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
+        <span className="text-emerald-700 font-semibold bg-emerald-100/70 px-2.5 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1 text-[10px] sm:text-xs shrink-0">
           <ShieldCheck size={13} className="text-emerald-600" />
           10/10 Google Drive Scans
         </span>
@@ -326,7 +343,7 @@ export const AchievementsSection: React.FC = () => {
             <div
               key={item.id}
               onClick={() => setInspectItem(item)}
-              className={`relative overflow-hidden p-5 sm:p-5.5 rounded-2xl bg-white border transition-all duration-300 hover:shadow-xl flex flex-col justify-between group cursor-pointer ${
+              className={`relative overflow-hidden p-4 sm:p-5.5 rounded-2xl bg-white border transition-all duration-300 hover:shadow-xl flex flex-col justify-between group cursor-pointer ${
                 isGold 
                   ? 'border-neutral-200 hover:border-amber-400/90 hover:shadow-amber-500/10 bg-gradient-to-br from-white via-white to-amber-50/20' 
                   : 'border-neutral-200 hover:border-sky-400/90 hover:shadow-sky-500/10 bg-gradient-to-br from-white via-white to-sky-50/20'
@@ -342,7 +359,7 @@ export const AchievementsSection: React.FC = () => {
               {/* Card Foreground Content */}
               <div className="relative z-10">
                 {/* Top Row: Category / Rank Badge on Left, Year & Domain on Right */}
-                <div className="flex items-center justify-between mb-3.5 gap-2">
+                <div className="flex items-center justify-between mb-3 gap-2">
                   <span className={`inline-flex items-center gap-1 text-[10px] font-mono font-bold px-2.5 py-1 rounded-md tracking-wider uppercase whitespace-nowrap shrink-0 ${item.badgeBg} ${item.badgeText}`}>
                     <span>{isGold ? '🥇 1ST PRIZE' : '🥈 2ND PRIZE'}</span>
                   </span>
@@ -352,31 +369,31 @@ export const AchievementsSection: React.FC = () => {
                 </div>
 
                 {/* Event Title */}
-                <h4 className="text-base sm:text-lg font-sans font-bold text-neutral-900 group-hover:text-black transition-colors leading-snug">
+                <h4 className="text-sm sm:text-lg font-sans font-bold text-neutral-900 group-hover:text-black transition-colors leading-snug">
                   {item.title}
                 </h4>
 
                 {/* Host Institution */}
-                <p className="text-xs text-neutral-500 font-mono mt-1.5 mb-3 flex items-center gap-1.5 line-clamp-1">
+                <p className="text-xs text-neutral-500 font-mono mt-1.5 mb-2.5 flex items-center gap-1.5 line-clamp-1">
                   <Building2 size={13} className="text-neutral-400 shrink-0" />
                   <span>{item.institution}</span>
                 </p>
 
                 {/* Feature Highlight Pill */}
                 {item.highlight && (
-                  <div className="mb-2 px-3 py-2 rounded-xl bg-white/80 backdrop-blur-xs border border-neutral-150 text-xs font-sans text-neutral-800 flex items-center gap-2 shadow-3xs">
+                  <div className="mb-2 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-white/80 backdrop-blur-xs border border-neutral-150 text-xs font-sans text-neutral-800 flex items-center gap-2 shadow-3xs">
                     <Sparkles size={13} className={`shrink-0 ${isGold ? 'text-amber-500' : 'text-sky-500'}`} />
-                    <span className="line-clamp-1 font-medium">{item.highlight}</span>
+                    <span className="line-clamp-1 font-medium text-[11px] sm:text-xs">{item.highlight}</span>
                   </div>
                 )}
               </div>
 
               {/* Bottom Row: Copy Proof Link + View Certificate Button */}
-              <div className="relative z-10 pt-3.5 mt-3 border-t border-neutral-100 flex items-center justify-between text-xs font-mono">
+              <div className="relative z-10 pt-3 mt-3 border-t border-neutral-100 flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
                 <button
                   onClick={(e) => handleCopy(e, item.certificateUrl, item.id)}
                   title="Copy certificate verification link"
-                  className="text-neutral-400 hover:text-black transition-colors flex items-center gap-1.5 cursor-pointer"
+                  className="text-neutral-400 hover:text-black transition-colors flex items-center gap-1.5 cursor-pointer min-h-[36px] py-1"
                 >
                   {isCopied ? (
                     <>
@@ -396,7 +413,7 @@ export const AchievementsSection: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className={`font-semibold text-white px-3.5 py-1.5 rounded-xl text-xs transition-all flex items-center gap-1.5 shadow-2xs hover:scale-105 active:scale-95 cursor-pointer ${
+                  className={`font-semibold text-white px-3 sm:px-3.5 py-1.5 min-h-[36px] rounded-xl text-xs transition-all flex items-center gap-1.5 shadow-2xs hover:scale-105 active:scale-95 cursor-pointer ${
                     isGold
                       ? 'bg-amber-600 hover:bg-amber-700 shadow-amber-500/20'
                       : 'bg-sky-600 hover:bg-sky-700 shadow-sky-500/20'
@@ -434,11 +451,11 @@ export const AchievementsSection: React.FC = () => {
       {/* Full Certificate Proof Inspection Modal */}
       {inspectItem && (
         <div
-          className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 animate-fadeIn"
+          className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fadeIn"
           onClick={() => setInspectItem(null)}
         >
           <div
-            className="relative w-full max-w-lg rounded-3xl bg-white text-neutral-900 border border-neutral-200 shadow-2xl p-6 sm:p-8 space-y-5 animate-scaleUp overflow-hidden"
+            className="relative w-full max-w-lg rounded-3xl bg-white text-neutral-900 border border-neutral-200 shadow-2xl p-4 sm:p-8 space-y-4 sm:space-y-5 animate-scaleUp overflow-y-auto max-h-[88dvh]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Top Accent Strip */}
@@ -447,16 +464,16 @@ export const AchievementsSection: React.FC = () => {
             />
 
             {/* Modal Header */}
-            <div className="flex items-start justify-between gap-4 pb-4 border-b border-neutral-200 pt-1">
-              <div className="flex items-center gap-3">
+            <div className="flex items-start justify-between gap-3 sm:gap-4 pb-3.5 sm:pb-4 border-b border-neutral-200 pt-1">
+              <div className="flex items-center gap-2.5 sm:gap-3">
                 <div 
-                  className="w-13 h-13 rounded-2xl flex items-center justify-center font-sans font-black text-2xl shadow-md shrink-0"
+                  className="w-11 h-11 sm:w-13 sm:h-13 rounded-2xl flex items-center justify-center font-sans font-black text-xl sm:text-2xl shadow-md shrink-0"
                   style={{
                     backgroundColor: `${inspectItem.brandColor}18`,
                     color: inspectItem.brandColor,
                   }}
                 >
-                  {inspectItem.rank === '1st' ? <Trophy size={26} /> : <Medal size={26} />}
+                  {inspectItem.rank === '1st' ? <Trophy size={22} className="sm:w-[26px] sm:h-[26px]" /> : <Medal size={22} className="sm:w-[26px] sm:h-[26px]" />}
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
@@ -467,7 +484,7 @@ export const AchievementsSection: React.FC = () => {
                       {inspectItem.year}
                     </span>
                   </div>
-                  <h3 className="text-xl font-sans font-black text-black mt-1 leading-snug">
+                  <h3 className="text-base sm:text-xl font-sans font-black text-black mt-1 leading-snug">
                     {inspectItem.title}
                   </h3>
                   <p className="text-xs font-sans text-neutral-600 flex items-center gap-1 mt-0.5">
@@ -480,14 +497,14 @@ export const AchievementsSection: React.FC = () => {
               <button
                 onClick={() => setInspectItem(null)}
                 aria-label="Close Modal"
-                className="p-2 rounded-full hover:bg-neutral-100 text-neutral-400 hover:text-black transition-colors cursor-pointer shrink-0"
+                className="p-2 rounded-full hover:bg-neutral-100 text-neutral-400 hover:text-black transition-colors cursor-pointer shrink-0 min-h-[36px] min-w-[36px] flex items-center justify-center"
               >
                 <X size={18} />
               </button>
             </div>
 
             {/* Scope / Context Description */}
-            <div className="p-4 rounded-2xl bg-neutral-50 border border-neutral-200 space-y-2">
+            <div className="p-3.5 sm:p-4 rounded-2xl bg-neutral-50 border border-neutral-200 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-mono text-neutral-500 uppercase font-bold">
                   EVALUATION & JURY CRITERIA
@@ -510,38 +527,38 @@ export const AchievementsSection: React.FC = () => {
             </div>
 
             {/* Official Verification Metadata Box */}
-            <div className="p-4 rounded-2xl bg-neutral-900 text-white font-mono text-xs space-y-2.5 shadow-inner">
-              <div className="flex items-center justify-between pb-2 border-b border-neutral-800 text-[11px]">
+            <div className="p-3.5 sm:p-4 rounded-2xl bg-neutral-900 text-white font-mono text-xs space-y-2 shadow-inner">
+              <div className="flex items-center justify-between pb-2 border-b border-neutral-800 text-[10px] sm:text-[11px]">
                 <span className="text-neutral-400">CREDENTIAL SOURCE:</span>
                 <span className="text-emerald-400 font-bold flex items-center gap-1">
                   <CheckCircle2 size={12} /> Google Drive Cloud Certificate
                 </span>
               </div>
-              <div className="flex items-center justify-between pb-2 border-b border-neutral-800 text-[11px]">
+              <div className="flex items-center justify-between pb-2 border-b border-neutral-800 text-[10px] sm:text-[11px]">
                 <span className="text-neutral-400">HOST INSTITUTION:</span>
-                <span className="text-white font-bold">{inspectItem.institution}</span>
+                <span className="text-white font-bold truncate max-w-[180px]">{inspectItem.institution}</span>
               </div>
-              <div className="flex items-center justify-between text-[11px]">
+              <div className="flex items-center justify-between text-[10px] sm:text-[11px]">
                 <span className="text-neutral-400">VALIDATION STATUS:</span>
                 <span className="text-emerald-400 font-bold">● Authenticated Podium Victory</span>
               </div>
             </div>
 
             {/* Modal Actions */}
-            <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row items-center gap-2.5 sm:gap-3 pt-1">
               <a
                 href={inspectItem.certificateUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:flex-1 py-3 px-5 rounded-2xl bg-black hover:bg-neutral-800 text-white font-sans font-bold text-xs transition-all flex items-center justify-center gap-2 shadow-md hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                className="w-full sm:flex-1 py-2.5 sm:py-3 px-4 sm:px-5 min-h-[44px] rounded-2xl bg-black hover:bg-neutral-800 text-white font-sans font-bold text-xs transition-all flex items-center justify-center gap-2 shadow-md hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
               >
-                <span>Open Certificate Scan (Google Drive)</span>
+                <span>Open Certificate Scan</span>
                 <ExternalLink size={13} className="text-amber-400" />
               </a>
 
               <button
                 onClick={(e) => handleCopy(e, inspectItem.certificateUrl, inspectItem.id)}
-                className="w-full sm:w-auto py-3 px-4 rounded-2xl bg-neutral-100 hover:bg-neutral-200 text-neutral-800 font-mono text-xs font-medium transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                className="w-full sm:w-auto py-2.5 sm:py-3 px-4 min-h-[44px] rounded-2xl bg-neutral-100 hover:bg-neutral-200 text-neutral-800 font-mono text-xs font-medium transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 {copiedId === inspectItem.id ? (
                   <>

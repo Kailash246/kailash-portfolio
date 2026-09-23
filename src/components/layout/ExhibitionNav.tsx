@@ -44,13 +44,19 @@ export const ExhibitionNav: React.FC = () => {
 
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      (window as any).__lenis?.stop();
       window.addEventListener('keydown', handleKeyDown);
     } else {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      (window as any).__lenis?.start();
     }
 
     return () => {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      (window as any).__lenis?.start();
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [mobileMenuOpen]);
@@ -191,48 +197,59 @@ export const ExhibitionNav: React.FC = () => {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 bg-white/98 backdrop-blur-xl lg:hidden flex flex-col justify-center px-8 py-16 animate-fadeIn">
-          <div className="flex items-center justify-between pb-6 border-b border-neutral-200 mb-8">
+        <div
+          className="fixed inset-0 z-50 bg-white/98 backdrop-blur-xl lg:hidden flex flex-col justify-between p-5 sm:p-7 h-[100dvh] max-h-[100dvh] overflow-y-auto overscroll-contain animate-fadeIn"
+          style={{ touchAction: 'pan-y' }}
+        >
+          {/* Header */}
+          <div className="flex items-center justify-between pb-4 border-b border-neutral-200 shrink-0">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500" />
-              <span className="text-xs font-mono tracking-widest text-neutral-500 uppercase">
+              <span className="text-xs font-mono tracking-widest text-neutral-500 uppercase font-semibold">
                 PORTFOLIO DIRECTORY
               </span>
             </div>
             <button
               onClick={() => setMobileMenuOpen(false)}
-              className="text-xs font-mono text-black font-semibold uppercase tracking-wider p-2 hover:bg-neutral-100 rounded-lg cursor-pointer"
+              aria-label="Close navigation menu"
+              className="text-xs font-mono text-black font-bold uppercase tracking-wider px-3.5 py-2 bg-neutral-100 hover:bg-neutral-200 active:bg-neutral-300 rounded-full transition-colors cursor-pointer min-h-[44px] inline-flex items-center gap-1.5"
             >
-              CLOSE [ESC]
+              <span>CLOSE</span>
+              <X size={15} />
             </button>
           </div>
 
-          <div className="space-y-2 max-h-[60vh] overflow-y-auto">
-            {NAV_ITEMS.map((item, idx) => (
-              <button
-                key={item.id}
-                onClick={() => handleNavClick(item.id)}
-                className="w-full flex items-center justify-between py-3 border-b border-neutral-100 text-left group cursor-pointer"
-              >
-                <span className="text-lg font-sans font-bold text-neutral-900 group-hover:text-neutral-500 transition-colors">
-                  {item.label}
-                </span>
-                <span className="text-xs font-mono text-neutral-400">
-                  0{idx + 1}
-                </span>
-              </button>
-            ))}
+          {/* Links list */}
+          <div className="space-y-1 py-4 flex-1 overflow-y-auto">
+            {NAV_ITEMS.map((item, idx) => {
+              const isActive = activeRoom === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => handleNavClick(item.id)}
+                  className={`w-full flex items-center justify-between py-3 px-3.5 rounded-xl border-b border-neutral-100/80 text-left group cursor-pointer transition-colors min-h-[48px] ${
+                    isActive ? 'bg-neutral-100 font-bold' : 'hover:bg-neutral-50 active:bg-neutral-100'
+                  }`}
+                >
+                  <span className={`text-lg font-sans font-bold transition-colors ${isActive ? 'text-black' : 'text-neutral-700 group-hover:text-black'}`}>
+                    {item.label}
+                  </span>
+                  <span className="text-xs font-mono text-neutral-400 font-medium">
+                    0{idx + 1}
+                  </span>
+                </button>
+              );
+            })}
           </div>
 
-          <div className="mt-8 pt-6 border-t border-neutral-200 flex items-center justify-between">
-            <span className="text-xs font-mono text-neutral-500">
-              KAILASH KUMAR • BCA 2025
-            </span>
+          {/* Bottom strip */}
+          <div className="pt-4 border-t border-neutral-200 flex items-center justify-between text-xs font-mono text-neutral-500 shrink-0">
+            <span className="truncate">KAILASH KUMAR • BCA</span>
             <button
               onClick={toggleReducedMotion}
-              className="text-xs font-mono text-black font-bold underline cursor-pointer"
+              className="text-xs font-mono text-black font-bold underline cursor-pointer p-2 min-h-[44px] flex items-center"
             >
-              {reducedMotion ? 'Turn Motion On' : 'Reduce Motion'}
+              {reducedMotion ? 'Motion: Off' : 'Motion: On'}
             </button>
           </div>
         </div>

@@ -16,6 +16,23 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ project, onClose
     return () => window.removeEventListener('keydown', handleKey);
   }, [onClose]);
 
+  // Lock background scrolling and pause Lenis while modal is open
+  useEffect(() => {
+    if (!project) return;
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+    
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    (window as any).__lenis?.stop();
+
+    return () => {
+      document.body.style.overflow = originalBodyOverflow;
+      document.documentElement.style.overflow = originalHtmlOverflow;
+      (window as any).__lenis?.start();
+    };
+  }, [project]);
+
   if (!project) return null;
 
   return (
@@ -23,14 +40,14 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ project, onClose
       role="dialog"
       aria-modal="true"
       aria-labelledby="case-study-title"
-      className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 lg:p-8 animate-fadeIn"
+      className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 lg:p-8 animate-fadeIn"
     >
       <div
         className="relative w-full max-w-4xl bg-white border border-neutral-200 rounded-3xl shadow-2xl overflow-hidden my-auto animate-scaleUp"
       >
         {/* Vercel Dialog Header */}
-        <div className="bg-neutral-900 text-white px-6 sm:px-8 py-4 flex items-center justify-between border-b border-neutral-800">
-          <div className="flex items-center gap-3">
+        <div className="bg-neutral-900 text-white px-4 sm:px-8 py-3.5 sm:py-4 flex items-center justify-between border-b border-neutral-800">
+          <div className="flex items-center gap-2 sm:gap-3">
             <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-neutral-800 text-emerald-400">
               PROJECT // {project.number}
             </span>
@@ -41,7 +58,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ project, onClose
           <button
             onClick={onClose}
             aria-label="Close Case Study (Escape)"
-            className="flex items-center gap-1.5 text-xs font-mono text-neutral-400 hover:text-white bg-neutral-800 hover:bg-neutral-700 px-3 py-1.5 rounded-full cursor-pointer transition-colors outline-none focus-visible:ring-2 focus-visible:ring-white"
+            className="flex items-center gap-1.5 text-xs font-mono text-neutral-400 hover:text-white bg-neutral-800 hover:bg-neutral-700 px-3 py-1.5 min-h-[36px] rounded-full cursor-pointer transition-colors outline-none focus-visible:ring-2 focus-visible:ring-white"
           >
             <span>ESC</span>
             <X size={13} />
@@ -49,9 +66,9 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ project, onClose
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 sm:p-8 max-h-[80vh] overflow-y-auto space-y-8">
+        <div className="p-4 sm:p-8 max-h-[85dvh] overflow-y-auto space-y-6 sm:space-y-8">
           {/* Header Title Section */}
-          <div className="border-b border-neutral-100 pb-6">
+          <div className="border-b border-neutral-100 pb-5 sm:pb-6">
             <div className="flex flex-wrap items-center gap-2 mb-2">
               <span className="text-xs font-mono text-neutral-600 bg-neutral-100 px-2.5 py-0.5 rounded-full">
                 {project.category}
@@ -60,7 +77,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ project, onClose
                 ● {project.status} ({project.year})
               </span>
             </div>
-            <h2 className="text-2xl sm:text-4xl font-sans font-black text-[#111111] tracking-tight">
+            <h2 className="text-xl sm:text-3xl md:text-4xl font-sans font-black text-[#111111] tracking-tight">
               {project.title}
             </h2>
             <p className="text-sm sm:text-base font-sans font-medium text-neutral-600 mt-1">

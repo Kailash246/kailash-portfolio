@@ -8,7 +8,7 @@ export const AboutSection: React.FC = () => {
     <section
       id="about"
       aria-label="Section 01: About Me"
-      className="py-16 sm:py-24 px-4 sm:px-8 max-w-7xl mx-auto border-t border-neutral-100"
+      className="py-12 sm:py-24 px-3 sm:px-8 max-w-7xl mx-auto border-t border-neutral-100"
     >
       <RoomHeader
         index="01"
@@ -19,10 +19,10 @@ export const AboutSection: React.FC = () => {
       />
 
       {/* Clean, Modern Personal Introduction Card */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch mt-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch mt-6 sm:mt-8">
         
         {/* Main Personal Profile (8 cols) */}
-        <div className="lg:col-span-8 p-6 sm:p-8 rounded-3xl bg-white border border-neutral-200/90 shadow-sm flex flex-col justify-between hover:border-neutral-300 transition-all">
+        <div className="lg:col-span-8 p-4 sm:p-6 lg:p-8 rounded-3xl bg-white border border-neutral-200/90 shadow-sm flex flex-col justify-between hover:border-neutral-300 transition-all">
           <div className="space-y-4">
             
             {/* Header: Monogram & Live Status */}
@@ -188,7 +188,7 @@ export const AboutSection: React.FC = () => {
         </div>
 
         {/* Academic & Location Card (4 cols) */}
-        <div className="lg:col-span-4 p-6 sm:p-7 rounded-3xl bg-neutral-50/80 border border-neutral-200/90 shadow-xs flex flex-col justify-between">
+        <div className="lg:col-span-4 p-4 sm:p-6 lg:p-7 rounded-3xl bg-neutral-50/80 border border-neutral-200/90 shadow-xs flex flex-col justify-between">
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-xs font-mono text-neutral-500 font-bold uppercase tracking-wider pb-2 border-b border-neutral-200/60">
               <GraduationCap size={15} className="text-neutral-700" />
@@ -247,7 +247,7 @@ export const AboutSection: React.FC = () => {
       </div>
 
       {/* Modern AI-Assisted Learning & Productivity Sub-Card */}
-      <div className="mt-6 p-5 sm:p-6 rounded-3xl bg-neutral-50/70 border border-neutral-200/80 hover:border-neutral-300 transition-all shadow-3xs">
+      <div className="mt-6 p-4 sm:p-6 rounded-3xl bg-neutral-50/70 border border-neutral-200/80 hover:border-neutral-300 transition-all shadow-3xs">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
           {/* Left Narrative */}
           <div className="max-w-xl space-y-1.5">
@@ -267,24 +267,24 @@ export const AboutSection: React.FC = () => {
           </div>
 
           {/* Right Visual Flow: Learn → Experiment → Apply → Improve */}
-          <div className="shrink-0">
-            <div className="flex items-center gap-1.5 sm:gap-2 text-xs font-mono">
-              <div className="px-3 py-1.5 rounded-xl bg-white border border-neutral-200 shadow-3xs text-center">
+          <div className="shrink-0 w-full lg:w-auto">
+            <div className="grid grid-cols-2 sm:flex sm:items-center gap-2 sm:gap-1.5 text-xs font-mono">
+              <div className="px-3 py-2 sm:py-1.5 rounded-xl bg-white border border-neutral-200 shadow-3xs text-center">
                 <span className="block text-[9px] text-neutral-400 uppercase font-semibold">01</span>
                 <span className="font-sans font-bold text-neutral-900 text-xs">Learn</span>
               </div>
-              <ArrowRight size={12} className="text-neutral-400 shrink-0" />
-              <div className="px-3 py-1.5 rounded-xl bg-white border border-neutral-200 shadow-3xs text-center">
+              <ArrowRight size={12} className="text-neutral-400 shrink-0 hidden sm:block" />
+              <div className="px-3 py-2 sm:py-1.5 rounded-xl bg-white border border-neutral-200 shadow-3xs text-center">
                 <span className="block text-[9px] text-neutral-400 uppercase font-semibold">02</span>
                 <span className="font-sans font-bold text-neutral-900 text-xs">Experiment</span>
               </div>
-              <ArrowRight size={12} className="text-neutral-400 shrink-0" />
-              <div className="px-3 py-1.5 rounded-xl bg-white border border-neutral-200 shadow-3xs text-center">
+              <ArrowRight size={12} className="text-neutral-400 shrink-0 hidden sm:block" />
+              <div className="px-3 py-2 sm:py-1.5 rounded-xl bg-white border border-neutral-200 shadow-3xs text-center">
                 <span className="block text-[9px] text-neutral-400 uppercase font-semibold">03</span>
                 <span className="font-sans font-bold text-neutral-900 text-xs">Apply</span>
               </div>
-              <ArrowRight size={12} className="text-neutral-400 shrink-0" />
-              <div className="px-3 py-1.5 rounded-xl bg-white border border-neutral-200 shadow-3xs text-center">
+              <ArrowRight size={12} className="text-neutral-400 shrink-0 hidden sm:block" />
+              <div className="px-3 py-2 sm:py-1.5 rounded-xl bg-white border border-neutral-200 shadow-3xs text-center">
                 <span className="block text-[9px] text-neutral-400 uppercase font-semibold">04</span>
                 <span className="font-sans font-bold text-neutral-900 text-xs">Improve</span>
               </div>

@@ -215,7 +215,7 @@ export const CertificationsSection: React.FC = () => {
     <section
       id="certifications"
       aria-label="Section 04: Accredited Certifications"
-      className="py-14 sm:py-20 px-4 sm:px-8 max-w-7xl mx-auto border-t border-neutral-100"
+      className="py-12 sm:py-20 px-3 sm:px-8 max-w-7xl mx-auto border-t border-neutral-100"
     >
       <RoomHeader
         index="04"
@@ -226,14 +226,14 @@ export const CertificationsSection: React.FC = () => {
       />
 
       {/* Sleek, Minimalist Header Strip */}
-      <div className="flex flex-wrap items-center justify-between gap-3 py-3 px-4 sm:px-5 rounded-2xl bg-neutral-50 border border-neutral-200/80 mb-6 text-xs font-mono">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="font-bold text-neutral-900">10 VERIFIED INDUSTRY CREDENTIALS</span>
+      <div className="flex flex-wrap items-center justify-between gap-2.5 py-2.5 sm:py-3 px-3.5 sm:px-5 rounded-2xl bg-neutral-50 border border-neutral-200/80 mb-5 sm:mb-6 text-xs font-mono">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+          <span className="font-bold text-neutral-900 text-[11px] sm:text-xs">10 VERIFIED INDUSTRY CREDENTIALS</span>
           <span className="hidden sm:inline text-neutral-400">•</span>
           <span className="hidden sm:inline text-neutral-600">Amazon, IBM, Meta, Cisco, MSFT</span>
         </div>
-        <span className="text-emerald-700 font-semibold bg-emerald-100/70 px-2.5 py-0.5 rounded-full border border-emerald-200">
+        <span className="text-emerald-700 font-semibold bg-emerald-100/70 px-2.5 py-0.5 rounded-full border border-emerald-200 text-[10px] sm:text-xs shrink-0">
           ✓ Coursera Registry
         </span>
       </div>
@@ -290,21 +290,21 @@ export const CertificationsSection: React.FC = () => {
           return (
             <div
               key={cert.id}
-              className="group relative rounded-2xl p-4 bg-white border border-neutral-200/90 hover:border-black transition-all duration-200 shadow-2xs hover:shadow-md flex flex-col justify-between"
+              className="group relative rounded-2xl p-3.5 sm:p-4 bg-white border border-neutral-200/90 hover:border-black transition-all duration-200 shadow-2xs hover:shadow-md flex flex-col justify-between"
             >
-              <div className="flex items-start gap-3.5">
+              <div className="flex items-start gap-3 sm:gap-3.5">
                 {/* Official Vector Company Logo */}
                 <div className="shrink-0 pt-0.5">
-                  <div className="w-12 h-12 rounded-xl bg-neutral-50/80 border border-neutral-200/70 p-1.5 flex items-center justify-center shadow-3xs group-hover:scale-105 transition-transform">
-                    <IssuerBrandLogo issuer={cert.issuer} className="w-9 h-9" />
+                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-neutral-50/80 border border-neutral-200/70 p-1.5 flex items-center justify-center shadow-3xs group-hover:scale-105 transition-transform">
+                    <IssuerBrandLogo issuer={cert.issuer} className="w-8 h-8 sm:w-9 sm:h-9" />
                   </div>
                 </div>
 
                 {/* Title & Metadata */}
                 <div className="flex-1 min-w-0">
                   {/* Top Line: Issuer Tag & Category */}
-                  <div className="flex items-center justify-between gap-2 mb-1">
-                    <div className="flex items-center gap-1.5 text-[11px] font-mono">
+                  <div className="flex flex-wrap items-center justify-between gap-1.5 mb-1">
+                    <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono">
                       <span className="font-bold text-neutral-900 uppercase">
                         {cert.issuer}
                       </span>
@@ -322,7 +322,7 @@ export const CertificationsSection: React.FC = () => {
                   </div>
 
                   {/* Clean Certificate Title */}
-                  <h3 className="text-sm sm:text-base font-sans font-bold text-neutral-900 tracking-tight leading-snug group-hover:text-black transition-colors">
+                  <h3 className="text-xs sm:text-base font-sans font-bold text-neutral-900 tracking-tight leading-snug group-hover:text-black transition-colors">
                     {cert.title}
                   </h3>
 
@@ -346,12 +346,12 @@ export const CertificationsSection: React.FC = () => {
               </div>
 
               {/* Bottom Quick-Action Strip */}
-              <div className="flex items-center justify-between gap-2 pt-3 mt-3 border-t border-neutral-100 text-xs">
+              <div className="flex flex-wrap items-center justify-between gap-2 pt-2.5 sm:pt-3 mt-3 border-t border-neutral-100 text-xs">
                 {/* Copy Link Action */}
                 <button
                   onClick={(e) => handleCopy(e, cert.verificationUrl, cert.id)}
                   title="Copy verification link"
-                  className="flex items-center gap-1 text-[10px] font-mono text-neutral-400 hover:text-black transition-colors cursor-pointer"
+                  className="flex items-center gap-1 text-[10px] font-mono text-neutral-400 hover:text-black transition-colors cursor-pointer min-h-[36px] py-1"
                 >
                   {isCopied ? (
                     <>
@@ -371,7 +371,7 @@ export const CertificationsSection: React.FC = () => {
                   href={cert.verificationUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-black hover:bg-neutral-800 text-white font-sans font-bold text-[11px] transition-all shadow-2xs hover:scale-105 active:scale-95 cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 min-h-[36px] rounded-xl bg-black hover:bg-neutral-800 text-white font-sans font-bold text-[11px] transition-all shadow-2xs hover:scale-105 active:scale-95 cursor-pointer"
                 >
                   <span>Verify on Coursera</span>
                   <ExternalLink size={11} className="text-emerald-400" />

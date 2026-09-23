@@ -6,9 +6,9 @@ export const ExhibitionFooter: React.FC = () => {
   const { scrollToRoom } = useExhibition();
 
   return (
-    <footer className="border-t border-neutral-200 bg-neutral-50/50 pt-16 pb-12 px-6 sm:px-12 mt-20">
+    <footer className="border-t border-neutral-200 bg-neutral-50/50 pt-12 sm:pt-16 pb-8 sm:pb-12 px-4 sm:px-12 mt-12 sm:mt-20">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-neutral-200">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-10 pb-10 sm:pb-12 border-b border-neutral-200">
           {/* Col 1: Identity */}
           <div className="md:col-span-2 space-y-3">
             <div className="flex items-center gap-2.5">
@@ -24,14 +24,14 @@ export const ExhibitionFooter: React.FC = () => {
               BCA student at Alliance University, Bangalore (CGPA: 7.5/10). Developer of FestNest and EliteQueue. Winner of 10 inter-collegiate hackathons & ideathons.
             </p>
 
-            <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-neutral-500 pt-1">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs font-mono text-neutral-500 pt-1">
               <span className="flex items-center gap-1.5">
-                <GraduationCap size={14} className="text-black" />
-                Alliance University • BCA (2024–Present)
+                <GraduationCap size={14} className="text-black shrink-0" />
+                <span>Alliance University • BCA (2024–Present)</span>
               </span>
               <span className="flex items-center gap-1.5">
-                <MapPin size={14} className="text-black" />
-                Bangalore, Karnataka, India
+                <MapPin size={14} className="text-black shrink-0" />
+                <span>Bangalore, Karnataka, India</span>
               </span>
             </div>
           </div>
@@ -41,11 +41,11 @@ export const ExhibitionFooter: React.FC = () => {
             <h4 className="text-xs font-mono tracking-widest text-neutral-900 uppercase font-bold">
               NAVIGATION
             </h4>
-            <ul className="space-y-2 text-xs font-sans text-neutral-500">
+            <ul className="space-y-1.5 sm:space-y-2 text-xs font-sans text-neutral-500">
               <li>
                 <button
                   onClick={() => scrollToRoom('about')}
-                  className="hover:text-black transition-colors cursor-pointer"
+                  className="hover:text-black transition-colors cursor-pointer py-1 min-h-[30px]"
                 >
                   01 // About Me & Background
                 </button>
@@ -53,7 +53,7 @@ export const ExhibitionFooter: React.FC = () => {
               <li>
                 <button
                   onClick={() => scrollToRoom('projects')}
-                  className="hover:text-black transition-colors cursor-pointer"
+                  className="hover:text-black transition-colors cursor-pointer py-1 min-h-[30px]"
                 >
                   02 // Featured Projects
                 </button>
@@ -61,7 +61,7 @@ export const ExhibitionFooter: React.FC = () => {
               <li>
                 <button
                   onClick={() => scrollToRoom('expertise')}
-                  className="hover:text-black transition-colors cursor-pointer"
+                  className="hover:text-black transition-colors cursor-pointer py-1 min-h-[30px]"
                 >
                   03 // Skills & Technologies
                 </button>
@@ -69,7 +69,7 @@ export const ExhibitionFooter: React.FC = () => {
               <li>
                 <button
                   onClick={() => scrollToRoom('certifications')}
-                  className="hover:text-black transition-colors cursor-pointer"
+                  className="hover:text-black transition-colors cursor-pointer py-1 min-h-[30px]"
                 >
                   04 // Accredited Certifications
                 </button>
@@ -77,7 +77,7 @@ export const ExhibitionFooter: React.FC = () => {
               <li>
                 <button
                   onClick={() => scrollToRoom('achievements')}
-                  className="hover:text-black transition-colors cursor-pointer"
+                  className="hover:text-black transition-colors cursor-pointer py-1 min-h-[30px]"
                 >
                   05 // Achievements & Milestones
                 </button>
@@ -85,7 +85,7 @@ export const ExhibitionFooter: React.FC = () => {
               <li>
                 <button
                   onClick={() => scrollToRoom('journey')}
-                  className="hover:text-black transition-colors cursor-pointer"
+                  className="hover:text-black transition-colors cursor-pointer py-1 min-h-[30px]"
                 >
                   06 // Learning Journey
                 </button>
@@ -93,7 +93,7 @@ export const ExhibitionFooter: React.FC = () => {
               <li>
                 <button
                   onClick={() => scrollToRoom('philosophy')}
-                  className="hover:text-black transition-colors cursor-pointer"
+                  className="hover:text-black transition-colors cursor-pointer py-1 min-h-[30px]"
                 >
                   07 // Core Philosophy
                 </button>
@@ -101,7 +101,7 @@ export const ExhibitionFooter: React.FC = () => {
               <li>
                 <button
                   onClick={() => scrollToRoom('contact')}
-                  className="hover:text-black transition-colors cursor-pointer"
+                  className="hover:text-black transition-colors cursor-pointer py-1 min-h-[30px]"
                 >
                   08 // Let's Connect
                 </button>
@@ -127,7 +127,7 @@ export const ExhibitionFooter: React.FC = () => {
 
             <button
               onClick={() => scrollToRoom('hero')}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-neutral-200 hover:bg-black hover:text-white text-neutral-900 text-xs font-mono transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2 min-h-[40px] rounded-full bg-neutral-200 hover:bg-black hover:text-white text-neutral-900 text-xs font-mono transition-all cursor-pointer active:scale-95"
             >
               <ArrowUp size={13} />
               <span>Back to Top</span>
@@ -136,7 +136,7 @@ export const ExhibitionFooter: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-neutral-400">
+        <div className="pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-4 text-center sm:text-left text-xs font-mono text-neutral-400">
           <div>
             © {new Date().getFullYear()} Kailash Kumar B. All rights reserved.
           </div>

@@ -95,30 +95,30 @@ export const ProjectsSection: React.FC = () => {
     switch (projId) {
       case 'festnest':
         return (
-          <div className="p-4 rounded-2xl bg-white border border-purple-200/90 shadow-xs space-y-2.5">
+          <div className="p-3.5 sm:p-4 rounded-2xl bg-white border border-purple-200/90 shadow-xs space-y-2.5">
             <div className="flex items-center justify-between pb-2 border-b border-purple-100 text-xs font-mono">
-              <span className="font-bold text-purple-900 flex items-center gap-1.5">
-                <Globe size={13} className="text-purple-600" />
+              <span className="font-bold text-purple-900 flex items-center gap-1.5 text-[11px] sm:text-xs truncate">
+                <Globe size={13} className="text-purple-600 shrink-0" />
                 festnest.in • Platform Showcase
               </span>
-              <span className="text-[10px] text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200 font-semibold">
+              <span className="text-[10px] text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200 font-semibold shrink-0">
                 Live System
               </span>
             </div>
 
             <div className="flex flex-wrap gap-1.5 pt-0.5">
-              <span className="text-[11px] font-sans font-medium px-2 py-0.5 rounded-md bg-purple-50 text-purple-800 border border-purple-100">
+              <span className="text-[10px] sm:text-[11px] font-sans font-medium px-2 py-0.5 rounded-md bg-purple-50 text-purple-800 border border-purple-100">
                 Hackathons
               </span>
-              <span className="text-[11px] font-sans font-medium px-2 py-0.5 rounded-md bg-purple-50 text-purple-800 border border-purple-100">
+              <span className="text-[10px] sm:text-[11px] font-sans font-medium px-2 py-0.5 rounded-md bg-purple-50 text-purple-800 border border-purple-100">
                 Technical Fests
               </span>
-              <span className="text-[11px] font-sans font-medium px-2 py-0.5 rounded-md bg-purple-50 text-purple-800 border border-purple-100">
+              <span className="text-[10px] sm:text-[11px] font-sans font-medium px-2 py-0.5 rounded-md bg-purple-50 text-purple-800 border border-purple-100">
                 Workshops
               </span>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 text-[11px] font-sans text-neutral-600 pt-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2 text-[11px] font-sans text-neutral-600 pt-1">
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 size={12} className="text-purple-600 shrink-0" />
                 <span>Instant search & filtering</span>
@@ -133,102 +133,102 @@ export const ProjectsSection: React.FC = () => {
 
       case 'elitequeue':
         return (
-          <div className="p-4 rounded-2xl bg-neutral-950 text-white border border-neutral-800 shadow-inner space-y-2.5">
+          <div className="p-3.5 sm:p-4 rounded-2xl bg-neutral-950 text-white border border-neutral-800 shadow-inner space-y-2.5">
             <div className="flex items-center justify-between pb-2 border-b border-neutral-800 text-xs font-mono">
-              <span className="font-bold text-amber-400 flex items-center gap-1.5">
-                <Ticket size={13} />
+              <span className="font-bold text-amber-400 flex items-center gap-1.5 text-[11px] sm:text-xs truncate">
+                <Ticket size={13} className="shrink-0" />
                 Virtual Token Architecture
               </span>
-              <span className="text-[10px] text-neutral-400 font-medium">
-                FIFO State Machine
+              <span className="text-[10px] text-neutral-400 font-medium shrink-0">
+                FIFO State
               </span>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono py-1">
-              <div className="p-2 rounded-xl bg-neutral-900 border border-neutral-800">
-                <span className="text-[10px] text-neutral-400 block">STEP 1</span>
-                <span className="text-xs font-sans font-bold text-white block mt-0.5">Book Token</span>
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-2 text-center text-xs font-mono py-1">
+              <div className="p-1.5 sm:p-2 rounded-xl bg-neutral-900 border border-neutral-800">
+                <span className="text-[9px] sm:text-[10px] text-neutral-400 block">STEP 1</span>
+                <span className="text-[10px] sm:text-xs font-sans font-bold text-white block mt-0.5 truncate">Book Token</span>
               </div>
-              <div className="p-2 rounded-xl bg-neutral-900 border border-neutral-800">
-                <span className="text-[10px] text-amber-400 block">STEP 2</span>
-                <span className="text-xs font-sans font-bold text-amber-300 block mt-0.5">Live Wait Time</span>
+              <div className="p-1.5 sm:p-2 rounded-xl bg-neutral-900 border border-neutral-800">
+                <span className="text-[9px] sm:text-[10px] text-amber-400 block">STEP 2</span>
+                <span className="text-[10px] sm:text-xs font-sans font-bold text-amber-300 block mt-0.5 truncate">Wait Time</span>
               </div>
-              <div className="p-2 rounded-xl bg-neutral-900 border border-neutral-800">
-                <span className="text-[10px] text-neutral-400 block">STEP 3</span>
-                <span className="text-xs font-sans font-bold text-white block mt-0.5">Counter Call</span>
+              <div className="p-1.5 sm:p-2 rounded-xl bg-neutral-900 border border-neutral-800">
+                <span className="text-[9px] sm:text-[10px] text-neutral-400 block">STEP 3</span>
+                <span className="text-[10px] sm:text-xs font-sans font-bold text-white block mt-0.5 truncate">Call Desk</span>
               </div>
             </div>
 
             <div className="text-[11px] text-neutral-400 flex items-center justify-between font-mono pt-0.5">
-              <span>Optimized for clinics, salons & campus desks</span>
+              <span className="truncate">Optimized for clinics, salons & campus desks</span>
             </div>
           </div>
         );
 
       case 'gocartz':
         return (
-          <div className="p-4 rounded-2xl bg-neutral-950 text-white border border-neutral-800 shadow-inner space-y-2.5">
+          <div className="p-3.5 sm:p-4 rounded-2xl bg-neutral-950 text-white border border-neutral-800 shadow-inner space-y-2.5">
             <div className="flex items-center justify-between pb-2 border-b border-neutral-800 text-xs font-mono">
-              <span className="font-bold text-emerald-400 flex items-center gap-1.5">
-                <Gauge size={13} />
+              <span className="font-bold text-emerald-400 flex items-center gap-1.5 text-[11px] sm:text-xs truncate">
+                <Gauge size={13} className="shrink-0" />
                 Electric Assist & Telemetry
               </span>
-              <span className="text-[10px] text-neutral-400 font-medium">
-                Hardware Prototyping
+              <span className="text-[10px] text-neutral-400 font-medium shrink-0">
+                Hardware
               </span>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono py-1">
-              <div className="p-2 rounded-xl bg-neutral-900 border border-neutral-800">
-                <span className="text-[10px] text-neutral-400 block">MOTOR</span>
-                <span className="text-xs font-sans font-bold text-white block mt-0.5">Throttle Assist</span>
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-2 text-center text-xs font-mono py-1">
+              <div className="p-1.5 sm:p-2 rounded-xl bg-neutral-900 border border-neutral-800">
+                <span className="text-[9px] sm:text-[10px] text-neutral-400 block">MOTOR</span>
+                <span className="text-[10px] sm:text-xs font-sans font-bold text-white block mt-0.5 truncate">Assist</span>
               </div>
-              <div className="p-2 rounded-xl bg-neutral-900 border border-neutral-800">
-                <span className="text-[10px] text-teal-400 block">SENSORS</span>
-                <span className="text-xs font-sans font-bold text-teal-300 block mt-0.5">Microcontroller</span>
+              <div className="p-1.5 sm:p-2 rounded-xl bg-neutral-900 border border-neutral-800">
+                <span className="text-[9px] sm:text-[10px] text-teal-400 block">SENSORS</span>
+                <span className="text-[10px] sm:text-xs font-sans font-bold text-teal-300 block mt-0.5 truncate">Telemetry</span>
               </div>
-              <div className="p-2 rounded-xl bg-neutral-900 border border-neutral-800">
-                <span className="text-[10px] text-neutral-400 block">DASHBOARD</span>
-                <span className="text-xs font-sans font-bold text-white block mt-0.5">Web Telemetry</span>
+              <div className="p-1.5 sm:p-2 rounded-xl bg-neutral-900 border border-neutral-800">
+                <span className="text-[9px] sm:text-[10px] text-neutral-400 block">DASHBOARD</span>
+                <span className="text-[10px] sm:text-xs font-sans font-bold text-white block mt-0.5 truncate">Web App</span>
               </div>
             </div>
 
             <div className="text-[11px] text-neutral-400 flex items-center justify-between font-mono pt-0.5">
-              <span>Built to reduce heavy hauling strain for street vendors</span>
+              <span className="truncate">Built to reduce hauling strain for vendors</span>
             </div>
           </div>
         );
 
       case 'shop4au':
         return (
-          <div className="p-4 rounded-2xl bg-white border border-blue-200/90 shadow-xs space-y-2.5">
+          <div className="p-3.5 sm:p-4 rounded-2xl bg-white border border-blue-200/90 shadow-xs space-y-2.5">
             <div className="flex items-center justify-between pb-2 border-b border-blue-100 text-xs font-mono">
-              <span className="font-bold text-blue-900 flex items-center gap-1.5">
-                <ShoppingBag size={13} className="text-blue-600" />
+              <span className="font-bold text-blue-900 flex items-center gap-1.5 text-[11px] sm:text-xs truncate">
+                <ShoppingBag size={13} className="text-blue-600 shrink-0" />
                 Campus Stationery Catalog
               </span>
-              <span className="text-[10px] text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200 font-semibold">
+              <span className="text-[10px] text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200 font-semibold shrink-0">
                 Storefront
               </span>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono py-1">
-              <div className="p-2 rounded-xl bg-blue-50/70 border border-blue-100">
-                <span className="text-[10px] text-blue-700 block">CATALOG</span>
-                <span className="text-xs font-sans font-bold text-blue-950 block mt-0.5">Lab Supplies</span>
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-2 text-center text-xs font-mono py-1">
+              <div className="p-1.5 sm:p-2 rounded-xl bg-blue-50/70 border border-blue-100">
+                <span className="text-[9px] sm:text-[10px] text-blue-700 block">CATALOG</span>
+                <span className="text-[10px] sm:text-xs font-sans font-bold text-blue-950 block mt-0.5 truncate">Supplies</span>
               </div>
-              <div className="p-2 rounded-xl bg-blue-50/70 border border-blue-100">
-                <span className="text-[10px] text-blue-700 block">ORDER</span>
-                <span className="text-xs font-sans font-bold text-blue-950 block mt-0.5">Digital Slip</span>
+              <div className="p-1.5 sm:p-2 rounded-xl bg-blue-50/70 border border-blue-100">
+                <span className="text-[9px] sm:text-[10px] text-blue-700 block">ORDER</span>
+                <span className="text-[10px] sm:text-xs font-sans font-bold text-blue-950 block mt-0.5 truncate">Digital Slip</span>
               </div>
-              <div className="p-2 rounded-xl bg-blue-50/70 border border-blue-100">
-                <span className="text-[10px] text-blue-700 block">PICKUP</span>
-                <span className="text-xs font-sans font-bold text-blue-950 block mt-0.5">Express Counter</span>
+              <div className="p-1.5 sm:p-2 rounded-xl bg-blue-50/70 border border-blue-100">
+                <span className="text-[9px] sm:text-[10px] text-blue-700 block">PICKUP</span>
+                <span className="text-[10px] sm:text-xs font-sans font-bold text-blue-950 block mt-0.5 truncate">Counter</span>
               </div>
             </div>
 
             <div className="text-[11px] text-neutral-600 flex items-center justify-between font-sans pt-0.5">
-              <span>Eliminates long counter queues during lecture breaks</span>
+              <span className="truncate">Eliminates long counter queues during breaks</span>
             </div>
           </div>
         );
@@ -242,7 +242,7 @@ export const ProjectsSection: React.FC = () => {
     <section
       id="projects"
       aria-label="Section 02: Featured Projects"
-      className="py-16 sm:py-24 px-4 sm:px-8 max-w-7xl mx-auto border-t border-neutral-100"
+      className="py-12 sm:py-24 px-3 sm:px-8 max-w-7xl mx-auto border-t border-neutral-100"
     >
       <RoomHeader
         index="02"
@@ -253,7 +253,7 @@ export const ProjectsSection: React.FC = () => {
       />
 
       {/* 2x2 Project Showcase Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 mt-6 sm:mt-8">
         {PROJECTS_DATA.map((proj) => {
           const colors = COLOR_MAP[proj.id] || COLOR_MAP.festnest;
           const isFlagship = proj.id === 'festnest';
@@ -262,14 +262,14 @@ export const ProjectsSection: React.FC = () => {
             <div
               key={proj.id}
               onClick={() => openProjectCaseStudy(proj.id)}
-              className={`group relative rounded-3xl p-6 transition-all duration-300 border ${colors.border} ${colors.hoverBorder} ${colors.gradientBg} shadow-xs hover:shadow-lg hover:-translate-y-1 cursor-pointer flex flex-col justify-between ${
+              className={`group relative rounded-3xl p-4 sm:p-6 transition-all duration-300 border ${colors.border} ${colors.hoverBorder} ${colors.gradientBg} shadow-xs hover:shadow-lg hover:-translate-y-1 cursor-pointer flex flex-col justify-between ${
                 isFlagship ? 'ring-2 ring-purple-400/40 shadow-purple-500/10' : ''
               }`}
             >
               <div className="space-y-3.5">
                 {/* Header Row: Number Badge, Category & Flagship Pill */}
-                <div className="flex items-center justify-between gap-2 pb-3 border-b border-neutral-200/70">
-                  <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-neutral-200/70">
+                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                     <span className={`w-7 h-7 rounded-xl ${colors.badgeBg} ${colors.badgeText} text-xs font-mono font-bold flex items-center justify-center shadow-xs`}>
                       {proj.number}
                     </span>
