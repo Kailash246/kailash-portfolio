@@ -17,7 +17,7 @@ import type { ExhibitionRoomId } from './types/exhibition';
 
 
 const ExhibitionContent: React.FC = () => {
-  const { setActiveRoom, reducedMotion } = useExhibition();
+  const { setActiveRoom, reducedMotion, viewMode } = useExhibition();
 
   // Initialize Lenis smooth kinetic scrolling
   useEffect(() => {
@@ -49,7 +49,7 @@ const ExhibitionContent: React.FC = () => {
 
   // Section Observer to synchronize activeRoom in nav
   useEffect(() => {
-    const roomIds: ExhibitionRoomId[] = [
+    const fullRoomIds: ExhibitionRoomId[] = [
       'hero',
       'about',
       'projects',
@@ -60,6 +60,17 @@ const ExhibitionContent: React.FC = () => {
       'philosophy',
       'contact',
     ];
+
+    const quickRoomIds: ExhibitionRoomId[] = [
+      'hero',
+      'about',
+      'projects',
+      'expertise',
+      'achievements',
+      'contact',
+    ];
+
+    const roomIds = viewMode === 'quick' ? quickRoomIds : fullRoomIds;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -81,7 +92,7 @@ const ExhibitionContent: React.FC = () => {
     });
 
     return () => observer.disconnect();
-  }, [setActiveRoom]);
+  }, [setActiveRoom, viewMode]);
 
   return (
     <div className="relative min-h-screen bg-white text-[#111111] antialiased selection:bg-black selection:text-white">

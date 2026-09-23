@@ -13,8 +13,10 @@ import {
   Copy, 
   Sparkles, 
   Building2, 
-  CheckCircle2 
+  CheckCircle2,
+  ArrowRight
 } from 'lucide-react';
+import { useExhibition } from '../../context/ExhibitionContext';
 
 // Custom Artistic Trophy Vector Watermark Illustration for Card Background
 const TrophyBackgroundIllustration: React.FC<{ isGold: boolean; className?: string }> = ({ isGold, className = "" }) => {
@@ -201,10 +203,119 @@ const FILTER_TABS: Array<{ id: FilterTab; label: string; count: number; icon: st
 ];
 
 export const AchievementsSection: React.FC = () => {
+  const { viewMode, setViewMode } = useExhibition();
   const [activeTab, setActiveTab] = useState<FilterTab>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [inspectItem, setInspectItem] = useState<AchievementItem | null>(null);
+
+  if (viewMode === 'quick') {
+    const quickItems = ACHIEVEMENTS_DATA.slice(0, 4);
+
+    return (
+      <section
+        id="achievements"
+        aria-label="Section 05: Achievements & Milestones (Quick View)"
+        className="py-10 sm:py-16 px-3 sm:px-8 max-w-7xl mx-auto border-t border-neutral-100 transition-opacity duration-300"
+      >
+        <RoomHeader
+          index="05"
+          catalogNumber="SECTION // 05"
+          title="KEY ACHIEVEMENTS & WINS"
+          subtitle="Top collegiate podium wins and innovation championships."
+          dimensionLabel="10 PODIUM WINS"
+        />
+
+        {/* Summary Banner */}
+        <div className="flex flex-wrap items-center justify-between gap-3 p-4 sm:p-5 rounded-2xl bg-amber-500/[0.08] border border-amber-300/80 mb-6">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold shadow-xs shrink-0">
+              <Trophy size={20} />
+            </div>
+            <div>
+              <h4 className="text-sm sm:text-base font-sans font-bold text-neutral-900">
+                10 Verified Collegiate Podium Victories
+              </h4>
+              <p className="text-xs font-mono text-neutral-600 mt-0.5">
+                6x 🥇 1st Place & 4x 🥈 2nd Place across Bangalore university hackathons & ideathons
+              </p>
+            </div>
+          </div>
+          <span className="text-amber-800 font-semibold bg-amber-100 px-3 py-1 rounded-full border border-amber-200 text-xs font-mono shrink-0 flex items-center gap-1.5">
+            <ShieldCheck size={14} className="text-amber-600" />
+            10/10 Verified Proofs
+          </span>
+        </div>
+
+        {/* 4 Key Wins Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+          {quickItems.map((item) => (
+            <div
+              key={item.id}
+              className="p-5 rounded-2xl bg-white border border-neutral-200/90 shadow-2xs hover:border-black transition-all flex flex-col justify-between space-y-3"
+            >
+              <div>
+                <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-neutral-100">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-amber-100 text-amber-900 border border-amber-300/70">
+                    {item.rankLabel}
+                  </span>
+                  <span className="text-xs font-mono text-neutral-400">
+                    {item.year}
+                  </span>
+                </div>
+
+                <div className="mt-3">
+                  <h3 className="text-base font-sans font-bold text-neutral-950">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs font-mono text-neutral-500 mt-0.5">
+                    {item.institution}
+                  </p>
+                </div>
+
+                <p className="text-xs font-sans text-neutral-700 mt-2 leading-relaxed">
+                  {item.description}
+                </p>
+              </div>
+
+              <div className="pt-2 border-t border-neutral-100 flex items-center justify-between">
+                <span className="text-[11px] font-mono text-neutral-400">
+                  {item.category}
+                </span>
+                <a
+                  href={item.certificateUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-xs font-mono text-neutral-800 hover:text-black hover:underline cursor-pointer"
+                >
+                  <span>View Proof Scan</span>
+                  <ExternalLink size={12} />
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Clear Button: View all achievements that switches to Full View */}
+        <div className="mt-8 flex justify-center">
+          <button
+            onClick={() => {
+              setViewMode('full');
+              setTimeout(() => {
+                const el = document.getElementById('achievements');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }, 60);
+            }}
+            className="px-6 py-3 min-h-[46px] rounded-full bg-black hover:bg-neutral-800 text-white font-mono text-xs font-bold transition-all shadow-md hover:scale-[1.02] active:scale-[0.98] cursor-pointer flex items-center gap-2.5"
+          >
+            <Trophy size={14} className="text-amber-400" />
+            <span>View All 10 Achievements & Proofs</span>
+            <ArrowRight size={14} />
+          </button>
+        </div>
+      </section>
+    );
+  }
 
   // Filtered list
   const filteredItems = useMemo(() => {

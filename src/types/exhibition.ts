@@ -9,6 +9,8 @@ export type ExhibitionRoomId =
   | 'philosophy'
   | 'contact';
 
+export type ViewMode = 'full' | 'quick';
+
 export type CertificationCategory = 
   | 'ALL'
   | 'CLOUD & WEB'

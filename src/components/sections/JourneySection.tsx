@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import { RoomHeader } from '../layout/RoomHeader';
 import { JOURNEY_STAGES } from '../../data/portfolioData';
+import { useExhibition } from '../../context/ExhibitionContext';
 import { Milestone, ArrowRight, Sparkles } from 'lucide-react';
 
 export const JourneySection: React.FC = () => {
+  const { viewMode } = useExhibition();
   const [activePhase, setActivePhase] = useState<number>(2); // Default to Builder phase (2024)
+
+  if (viewMode === 'quick') {
+    return null;
+  }
 
   const phaseIcons = ['🎓', '🌐', '⚡', '🚀'];
 

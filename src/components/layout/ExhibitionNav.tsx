@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useExhibition } from '../../context/ExhibitionContext';
 import { PERSONAL_INFO } from '../../data/portfolioData';
 import type { ExhibitionRoomId } from '../../types/exhibition';
+import { ModeSwitcher } from './ModeSwitcher';
 import { Wind, Play, Menu, X, ArrowUpRight } from 'lucide-react';
 
-const NAV_ITEMS: Array<{ id: ExhibitionRoomId; label: string }> = [
+const FULL_NAV_ITEMS: Array<{ id: ExhibitionRoomId; label: string }> = [
   { id: 'about', label: 'About' },
   { id: 'projects', label: 'Projects' },
   { id: 'expertise', label: 'Skills' },
@@ -15,13 +16,24 @@ const NAV_ITEMS: Array<{ id: ExhibitionRoomId; label: string }> = [
   { id: 'contact', label: 'Contact' },
 ];
 
+const QUICK_NAV_ITEMS: Array<{ id: ExhibitionRoomId; label: string }> = [
+  { id: 'about', label: 'About' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'expertise', label: 'Skills' },
+  { id: 'achievements', label: 'Achievements' },
+  { id: 'contact', label: 'Contact' },
+];
+
 export const ExhibitionNav: React.FC = () => {
   const {
     activeRoom,
     scrollToRoom,
     reducedMotion,
     toggleReducedMotion,
+    viewMode,
   } = useExhibition();
+
+  const navItems = viewMode === 'quick' ? QUICK_NAV_ITEMS : FULL_NAV_ITEMS;
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -107,7 +119,7 @@ export const ExhibitionNav: React.FC = () => {
 
           {/* Center Desktop Navigation Pills (Vercel Style) */}
           <div className="hidden lg:flex items-center gap-0.5 xl:gap-1 bg-neutral-100/90 p-1 rounded-full border border-neutral-200/80 shadow-xs backdrop-blur-md shrink-0">
-            {NAV_ITEMS.map((item) => {
+            {navItems.map((item) => {
               const isActive = activeRoom === item.id;
               return (
                 <button
@@ -125,8 +137,18 @@ export const ExhibitionNav: React.FC = () => {
             })}
           </div>
 
-          {/* Right Controls: Social Icons, Motion Toggle, Connect CTA */}
+          {/* Right Controls: Mode Switcher, Social Icons, Motion Toggle, Connect CTA */}
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            {/* Desktop Mode Switcher */}
+            <div className="hidden lg:inline-flex">
+              <ModeSwitcher />
+            </div>
+
+            {/* Mobile Compact Mode Switcher */}
+            <div className="inline-flex lg:hidden">
+              <ModeSwitcher isCompact />
+            </div>
+
             {/* GitHub Profile */}
             <a
               href={PERSONAL_INFO.socialLinks.github}
@@ -157,7 +179,7 @@ export const ExhibitionNav: React.FC = () => {
               </svg>
             </a>
 
-            {/* Motion Toggle Button (Compact icon-first button, never wraps text) */}
+            {/* Motion Toggle Button */}
             <button
               onClick={toggleReducedMotion}
               aria-label={`Toggle motion mode. Currently ${reducedMotion ? 'reduced' : 'standard'}`}
@@ -219,9 +241,22 @@ export const ExhibitionNav: React.FC = () => {
             </button>
           </div>
 
+          {/* Mode Switcher in Drawer */}
+          <div className="py-3 px-3.5 bg-neutral-50 rounded-2xl border border-neutral-200/80 flex items-center justify-between my-3 shrink-0">
+            <div className="flex flex-col">
+              <span className="text-[10px] font-mono uppercase font-bold text-neutral-500">
+                VIEW MODE
+              </span>
+              <span className="text-xs font-sans font-bold text-neutral-900">
+                {viewMode === 'full' ? 'Full Portfolio' : 'Quick Summary'}
+              </span>
+            </div>
+            <ModeSwitcher />
+          </div>
+
           {/* Links list */}
-          <div className="space-y-1 py-4 flex-1 overflow-y-auto">
-            {NAV_ITEMS.map((item, idx) => {
+          <div className="space-y-1 py-2 flex-1 overflow-y-auto">
+            {navItems.map((item, idx) => {
               const isActive = activeRoom === item.id;
               return (
                 <button

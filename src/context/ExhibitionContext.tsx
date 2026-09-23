@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
-import type { ExhibitionRoomId, ProjectData } from '../types/exhibition';
+import type { ExhibitionRoomId, ProjectData, ViewMode } from '../types/exhibition';
 
 import { PROJECTS_DATA } from '../data/portfolioData';
 
@@ -19,6 +19,9 @@ interface ExhibitionContextType {
   soundEnabled: boolean;
   toggleSound: () => void;
   scrollToRoom: (roomId: ExhibitionRoomId) => void;
+  viewMode: ViewMode;
+  setViewMode: (mode: ViewMode) => void;
+  toggleViewMode: () => void;
 }
 
 const ExhibitionContext = createContext<ExhibitionContextType | undefined>(undefined);
@@ -80,6 +83,27 @@ export const ExhibitionProvider: React.FC<{ children: ReactNode }> = ({ children
     setSoundEnabled((prev) => !prev);
   }, []);
 
+  const [viewMode, setViewModeState] = useState<ViewMode>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('portfolio_view_mode');
+      if (saved === 'quick' || saved === 'full') {
+        return saved;
+      }
+    }
+    return 'full';
+  });
+
+  const setViewMode = useCallback((mode: ViewMode) => {
+    setViewModeState(mode);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('portfolio_view_mode', mode);
+    }
+  }, []);
+
+  const toggleViewMode = useCallback(() => {
+    setViewMode(viewMode === 'full' ? 'quick' : 'full');
+  }, [viewMode, setViewMode]);
+
   const scrollToRoom = useCallback((roomId: ExhibitionRoomId) => {
     const targetElement = document.getElementById(roomId);
     if (targetElement) {
@@ -106,6 +130,9 @@ export const ExhibitionProvider: React.FC<{ children: ReactNode }> = ({ children
         soundEnabled,
         toggleSound,
         scrollToRoom,
+        viewMode,
+        setViewMode,
+        toggleViewMode,
       }}
     >
       {children}

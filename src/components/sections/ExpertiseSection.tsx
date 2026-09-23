@@ -8,8 +8,10 @@ import {
   Cloud, 
   Layers,
   Search,
-  CheckCircle2
+  CheckCircle2,
+  Sparkles
 } from 'lucide-react';
+import { useExhibition } from '../../context/ExhibitionContext';
 
 interface TechCategory {
   id: string;
@@ -116,8 +118,107 @@ const SKILL_CATEGORIES: TechCategory[] = [
   },
 ];
 
+interface QuickCategory {
+  title: string;
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+  accentBg: string;
+  skills: string[];
+}
+
+const QUICK_SKILL_CATEGORIES: QuickCategory[] = [
+  {
+    title: 'Frontend Development',
+    icon: Globe,
+    accentBg: 'bg-cyan-50 text-cyan-700 border-cyan-200',
+    skills: ['React', 'TypeScript', 'Tailwind CSS', 'Next.js', 'HTML5 & CSS3'],
+  },
+  {
+    title: 'Backend & APIs',
+    icon: Server,
+    accentBg: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    skills: ['Node.js', 'Express.js', 'Python', 'REST APIs', 'FastAPI'],
+  },
+  {
+    title: 'Databases & Persistence',
+    icon: Database,
+    accentBg: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+    skills: ['PostgreSQL', 'SQL', 'MongoDB', 'Prisma', 'Supabase'],
+  },
+  {
+    title: 'Tools & Platforms',
+    icon: Cloud,
+    accentBg: 'bg-purple-50 text-purple-700 border-purple-200',
+    skills: ['Git & GitHub', 'Vercel', 'Render', 'Vite', 'Postman'],
+  },
+  {
+    title: 'AI & Modern Workflows',
+    icon: Sparkles,
+    accentBg: 'bg-amber-50 text-amber-700 border-amber-200',
+    skills: ['NLP', 'OCR', 'AI-Assisted Workflows', 'Prompt Engineering'],
+  },
+];
+
 export const ExpertiseSection: React.FC = () => {
+  const { viewMode } = useExhibition();
   const [searchQuery, setSearchQuery] = useState('');
+
+  if (viewMode === 'quick') {
+    return (
+      <section
+        id="expertise"
+        aria-label="Section 03: Core Skills (Quick View)"
+        className="py-10 sm:py-16 px-3 sm:px-8 max-w-7xl mx-auto border-t border-neutral-100 transition-opacity duration-300"
+      >
+        <RoomHeader
+          index="03"
+          catalogNumber="SECTION // 03"
+          title="CORE SKILLS & TECHNOLOGIES"
+          subtitle="Curated full-stack technical competencies, development tools, and workflows."
+          dimensionLabel="CORE STACK"
+        />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mt-6 sm:mt-8">
+          {QUICK_SKILL_CATEGORIES.map((cat) => {
+            const Icon = cat.icon;
+            return (
+              <div
+                key={cat.title}
+                className="p-5 sm:p-6 rounded-2xl bg-white border border-neutral-200/90 shadow-2xs hover:border-black transition-all flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center gap-3 mb-3.5">
+                    <div className={`w-9 h-9 rounded-xl ${cat.accentBg} border flex items-center justify-center shrink-0`}>
+                      <Icon size={18} />
+                    </div>
+                    <h4 className="text-sm font-sans font-bold text-neutral-900">
+                      {cat.title}
+                    </h4>
+                  </div>
+
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {cat.skills.map((skill) => (
+                      <span
+                        key={skill}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-sans bg-neutral-100 text-neutral-800 font-medium hover:bg-neutral-200 transition-colors"
+                      >
+                        <CheckCircle2 size={11} className="text-emerald-500 shrink-0" />
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-4 pt-3 border-t border-neutral-100 flex items-center justify-between text-[10px] font-mono text-neutral-400">
+                  <span>{cat.skills.length} TECHNOLOGIES</span>
+                  <span className="text-emerald-600 font-semibold">● ACTIVE</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    );
+  }
 
   const filteredCategories = SKILL_CATEGORIES.map((cat) => {
     if (!searchQuery.trim()) return cat;

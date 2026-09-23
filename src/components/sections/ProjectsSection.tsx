@@ -88,7 +88,7 @@ const COLOR_MAP: Record<string, ColorConfig> = {
 };
 
 export const ProjectsSection: React.FC = () => {
-  const { selectedProject, openProjectCaseStudy, closeProjectCaseStudy } = useExhibition();
+  const { selectedProject, openProjectCaseStudy, closeProjectCaseStudy, viewMode } = useExhibition();
 
   // Render authentic visual product card previews
   const renderVisualPreview = (projId: string) => {
@@ -237,6 +237,117 @@ export const ProjectsSection: React.FC = () => {
         return null;
     }
   };
+
+  if (viewMode === 'quick') {
+    return (
+      <section
+        id="projects"
+        aria-label="Section 02: Featured Projects (Quick View)"
+        className="py-10 sm:py-16 px-3 sm:px-8 max-w-7xl mx-auto border-t border-neutral-100 transition-opacity duration-300"
+      >
+        <RoomHeader
+          index="02"
+          catalogNumber="SECTION // 02"
+          title="FEATURED PROJECTS"
+          subtitle="Key software applications and working prototypes built to solve real-world problems."
+          dimensionLabel="KEY PROJECTS"
+        />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mt-6 sm:mt-8">
+          {PROJECTS_DATA.map((proj) => {
+            const colors = COLOR_MAP[proj.id] || COLOR_MAP.festnest;
+            const isFlagship = proj.id === 'festnest';
+
+            return (
+              <div
+                key={proj.id}
+                className={`rounded-3xl p-5 sm:p-6 transition-all duration-300 border ${colors.border} ${colors.hoverBorder} ${colors.gradientBg} shadow-xs hover:shadow-md flex flex-col justify-between space-y-4`}
+              >
+                <div className="space-y-3">
+                  {/* Header Row */}
+                  <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-neutral-200/70">
+                    <div className="flex items-center gap-2">
+                      <span className={`w-7 h-7 rounded-xl ${colors.badgeBg} ${colors.badgeText} text-xs font-mono font-bold flex items-center justify-center shadow-xs`}>
+                        {proj.number}
+                      </span>
+                      <span className={`text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-lg ${colors.catBg} ${colors.catText} border ${colors.catBorder}`}>
+                        {proj.category.split('&')[0].trim()}
+                      </span>
+                    </div>
+
+                    {isFlagship && (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-purple-600 text-white font-bold shadow-2xs">
+                        <Star size={10} className="fill-current" />
+                        <span>FLAGSHIP</span>
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Title & Tagline */}
+                  <div>
+                    <h3 className="text-xl sm:text-2xl font-sans font-black text-neutral-950 tracking-tight">
+                      {proj.title}
+                    </h3>
+                    <p className="text-xs font-mono text-neutral-600 mt-0.5">
+                      {proj.tagline}
+                    </p>
+                  </div>
+
+                  {/* Short Description */}
+                  <p className="text-xs sm:text-sm font-sans text-neutral-700 leading-relaxed">
+                    {proj.problem.slice(0, 160)}...
+                  </p>
+
+                  {/* Tech Stack Pills */}
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {proj.technologies.slice(0, 5).map((tech) => (
+                      <span
+                        key={tech}
+                        className={`text-[10px] font-mono px-2 py-0.5 rounded-md ${colors.techBg} ${colors.techText} border ${colors.techBorder} font-medium`}
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Footer Action Links */}
+                <div className="pt-3 border-t border-neutral-200/70 flex items-center justify-between gap-2">
+                  <button
+                    onClick={() => openProjectCaseStudy(proj.id)}
+                    className="px-3.5 py-1.5 rounded-xl bg-black hover:bg-neutral-800 text-white text-xs font-mono flex items-center gap-1.5 transition-all shadow-3xs cursor-pointer min-h-[36px]"
+                  >
+                    <span>Case Study</span>
+                    <ArrowUpRight size={13} />
+                  </button>
+
+                  {proj.liveUrl && (
+                    <a
+                      href={proj.liveUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="px-3.5 py-1.5 rounded-xl bg-white hover:bg-neutral-100 text-neutral-900 border border-neutral-200 text-xs font-mono flex items-center gap-1.5 transition-all shadow-3xs cursor-pointer min-h-[36px]"
+                    >
+                      <Globe size={13} />
+                      <span>Live Site</span>
+                      <ArrowUpRight size={13} />
+                    </a>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {selectedProject && (
+          <CaseStudyModal
+            project={selectedProject}
+            onClose={closeProjectCaseStudy}
+          />
+        )}
+      </section>
+    );
+  }
 
   return (
     <section
