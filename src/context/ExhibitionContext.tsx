@@ -51,28 +51,57 @@ export const ExhibitionProvider: React.FC<{ children: ReactNode }> = ({ children
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  // Listen to escape key to close case study modal
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && selectedProject) {
-        setSelectedProject(null);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedProject]);
+  const closeProjectCaseStudy = useCallback(() => {
+    setSelectedProject(null);
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+    (window as any).__lenis?.start();
+
+    // If top history state was the case study modal, pop it so browser history remains clean
+    if (typeof window !== 'undefined' && window.history.state?.modal === 'case-study') {
+      window.history.back();
+    }
+  }, []);
 
   const openProjectCaseStudy = useCallback((projectId: string) => {
     const found = PROJECTS_DATA.find((p) => p.id === projectId);
     if (found) {
       setSelectedProject(found);
-      document.body.style.overflow = 'hidden';
+      // Push history state so the browser back button closes the modal cleanly
+      if (typeof window !== 'undefined') {
+        window.history.pushState({ modal: 'case-study', projectId }, '', window.location.href);
+      }
     }
   }, []);
 
-  const closeProjectCaseStudy = useCallback(() => {
-    setSelectedProject(null);
-    document.body.style.overflow = 'auto';
+  // Listen to escape key to close case study modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && selectedProject) {
+        closeProjectCaseStudy();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedProject, closeProjectCaseStudy]);
+
+  // Listen to browser back button (popstate) so clicking Back closes the modal without freezing the viewport
+  useEffect(() => {
+    const handlePopState = () => {
+      setSelectedProject((prev) => {
+        if (prev) {
+          // Modal was open when user pressed browser Back
+          document.body.style.overflow = '';
+          document.documentElement.style.overflow = '';
+          (window as any).__lenis?.start();
+          return null;
+        }
+        return prev;
+      });
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
   const toggleReducedMotion = useCallback(() => {

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import type { ProjectData } from '../../types/exhibition';
-import { X, CheckCircle2, AlertTriangle, BookOpen, Layers, Cpu, Compass } from 'lucide-react';
+import { X, CheckCircle2, AlertTriangle, BookOpen, Layers, Cpu, Compass, ArrowLeft } from 'lucide-react';
 
 interface CaseStudyModalProps {
   project: ProjectData | null;
@@ -16,42 +16,58 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ project, onClose
     return () => window.removeEventListener('keydown', handleKey);
   }, [onClose]);
 
-  // Lock background scrolling and pause Lenis while modal is open
+  // Lock background scrolling and pause Lenis while modal is open; cleanly restore on close
   useEffect(() => {
     if (!project) return;
-    const originalBodyOverflow = document.body.style.overflow;
-    const originalHtmlOverflow = document.documentElement.style.overflow;
     
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
     (window as any).__lenis?.stop();
 
     return () => {
-      document.body.style.overflow = originalBodyOverflow;
-      document.documentElement.style.overflow = originalHtmlOverflow;
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
       (window as any).__lenis?.start();
     };
   }, [project]);
 
   if (!project) return null;
 
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   return (
     <div
       role="dialog"
       aria-modal="true"
       aria-labelledby="case-study-title"
-      className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 lg:p-8 animate-fadeIn"
+      data-lenis-prevent
+      onClick={handleBackdropClick}
+      className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 md:p-6 overflow-hidden animate-fadeIn"
     >
       <div
-        className="relative w-full max-w-4xl bg-white border border-neutral-200 rounded-3xl shadow-2xl overflow-hidden my-auto animate-scaleUp"
+        data-lenis-prevent
+        onClick={(e) => e.stopPropagation()}
+        className="relative w-full max-w-4xl max-h-[92dvh] sm:max-h-[88dvh] bg-white border border-neutral-200 rounded-2xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden my-auto animate-scaleUp"
       >
         {/* Vercel Dialog Header */}
-        <div className="bg-neutral-900 text-white px-4 sm:px-8 py-3.5 sm:py-4 flex items-center justify-between border-b border-neutral-800">
+        <div className="shrink-0 bg-neutral-900 text-white px-4 sm:px-8 py-3 sm:py-3.5 flex items-center justify-between border-b border-neutral-800">
           <div className="flex items-center gap-2 sm:gap-3">
+            <button
+              onClick={onClose}
+              aria-label="Back to Projects"
+              className="flex items-center gap-1.5 text-xs font-mono font-bold text-neutral-200 hover:text-white bg-neutral-800 hover:bg-neutral-700 active:bg-neutral-600 px-3 py-1.5 rounded-full cursor-pointer transition-colors border border-neutral-700 min-h-[36px]"
+            >
+              <ArrowLeft size={13} />
+              <span>Back</span>
+            </button>
             <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-neutral-800 text-emerald-400">
               PROJECT // {project.number}
             </span>
-            <span className="text-xs font-mono text-neutral-400 uppercase hidden sm:inline">
+            <span className="text-xs font-mono text-neutral-400 uppercase hidden md:inline">
               TECHNICAL CASE STUDY & SPECIFICATION
             </span>
           </div>
@@ -66,7 +82,11 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ project, onClose
         </div>
 
         {/* Modal Body */}
-        <div className="p-4 sm:p-8 max-h-[85dvh] overflow-y-auto space-y-6 sm:space-y-8">
+        <div
+          data-lenis-prevent
+          style={{ WebkitOverflowScrolling: 'touch' }}
+          className="flex-1 overflow-y-auto overscroll-contain p-4 sm:p-8 space-y-6 sm:space-y-8"
+        >
           {/* Header Title Section */}
           <div className="border-b border-neutral-100 pb-5 sm:pb-6">
             <div className="flex flex-wrap items-center gap-2 mb-2">
@@ -204,12 +224,21 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ project, onClose
               ))}
             </div>
 
-            <button
-              onClick={onClose}
-              className="px-5 py-2 rounded-full bg-black hover:bg-neutral-800 text-white text-xs font-sans font-semibold cursor-pointer transition-colors"
-            >
-              Close Case Study
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={onClose}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-neutral-100 hover:bg-neutral-200 active:bg-neutral-300 text-neutral-800 text-xs font-mono font-semibold cursor-pointer transition-colors border border-neutral-200 min-h-[36px]"
+              >
+                <ArrowLeft size={13} />
+                <span>Back to Projects</span>
+              </button>
+              <button
+                onClick={onClose}
+                className="px-5 py-2 rounded-full bg-black hover:bg-neutral-800 active:bg-neutral-900 text-white text-xs font-sans font-semibold cursor-pointer transition-colors min-h-[36px]"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -186,6 +186,7 @@ export const ExhibitionNav: React.FC = () => {
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div
+          data-lenis-prevent
           className="fixed inset-0 z-50 bg-white/98 backdrop-blur-xl lg:hidden flex flex-col justify-between p-5 sm:p-7 h-[100dvh] max-h-[100dvh] overflow-y-auto overscroll-contain animate-fadeIn"
           style={{ touchAction: 'pan-y' }}
         >

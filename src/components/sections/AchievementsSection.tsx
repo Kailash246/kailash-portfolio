@@ -230,17 +230,28 @@ export const AchievementsSection: React.FC = () => {
   // Lock background scrolling and pause Lenis when certificate inspect modal is open
   useEffect(() => {
     if (!inspectItem) return;
-    const originalBodyOverflow = document.body.style.overflow;
-    const originalHtmlOverflow = document.documentElement.style.overflow;
     
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
     (window as any).__lenis?.stop();
 
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setInspectItem(null);
+    };
+
+    const handlePopState = () => {
+      setInspectItem(null);
+    };
+
+    window.addEventListener('keydown', handleKey);
+    window.addEventListener('popstate', handlePopState);
+
     return () => {
-      document.body.style.overflow = originalBodyOverflow;
-      document.documentElement.style.overflow = originalHtmlOverflow;
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
       (window as any).__lenis?.start();
+      window.removeEventListener('keydown', handleKey);
+      window.removeEventListener('popstate', handlePopState);
     };
   }, [inspectItem]);
 
@@ -561,12 +572,15 @@ export const AchievementsSection: React.FC = () => {
       {/* Full Certificate Proof Inspection Modal */}
       {inspectItem && (
         <div
-          className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fadeIn"
+          data-lenis-prevent
+          className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fadeIn overflow-hidden"
           onClick={() => setInspectItem(null)}
         >
           <div
-            className="relative w-full max-w-lg rounded-3xl bg-white text-neutral-900 border border-neutral-200 shadow-2xl p-4 sm:p-8 space-y-4 sm:space-y-5 animate-scaleUp overflow-y-auto max-h-[88dvh]"
+            data-lenis-prevent
+            className="relative w-full max-w-lg rounded-3xl bg-white text-neutral-900 border border-neutral-200 shadow-2xl p-4 sm:p-8 space-y-4 sm:space-y-5 animate-scaleUp overflow-y-auto max-h-[88dvh] overscroll-contain"
             onClick={(e) => e.stopPropagation()}
+            style={{ WebkitOverflowScrolling: 'touch' }}
           >
             {/* Top Accent Strip */}
             <div 
