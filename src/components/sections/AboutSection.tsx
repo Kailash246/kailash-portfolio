@@ -68,7 +68,7 @@ export const AboutSection: React.FC = () => {
             {/* Quick Action Buttons: Resume & Technical Profile */}
             <div className="pt-2 border-t border-neutral-100 flex flex-wrap items-center gap-2.5">
               <a
-                href="/resume.pdf"
+                href="/Kailash%20Kumar%20-%20CV.pdf"
                 target="_blank"
                 rel="noreferrer"
                 className="px-4 py-2 min-h-[40px] rounded-xl bg-black hover:bg-neutral-800 text-white text-xs font-mono transition-all flex items-center gap-2 cursor-pointer shadow-3xs"
@@ -78,7 +78,7 @@ export const AboutSection: React.FC = () => {
                 <ArrowUpRight size={13} />
               </a>
               <a
-                href="/Kailash Kumar B - TP.pdf"
+                href="/Technical%20Profile.pdf"
                 target="_blank"
                 rel="noreferrer"
                 className="px-4 py-2 min-h-[40px] rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-900 border border-neutral-200 text-xs font-mono transition-all flex items-center gap-2 cursor-pointer"
@@ -234,7 +234,7 @@ export const AboutSection: React.FC = () => {
                   </div>
                   <div className="flex items-center gap-1.5 shrink-0">
                     <a
-                      href="/resume.pdf"
+                      href="/Kailash%20Kumar%20-%20CV.pdf"
                       target="_blank"
                       rel="noopener noreferrer"
                       title="View Resume in new tab"
@@ -244,8 +244,8 @@ export const AboutSection: React.FC = () => {
                       <ExternalLink size={10} />
                     </a>
                     <a
-                      href="/resume.pdf"
-                      download="Kailash_Kumar_B_Resume.pdf"
+                      href="/Kailash%20Kumar%20-%20CV.pdf"
+                      download="Kailash_Kumar_CV.pdf"
                       title="Download Resume PDF"
                       className="p-1.5 rounded-lg bg-black hover:bg-neutral-800 text-white transition-all shadow-3xs cursor-pointer inline-flex items-center"
                     >
@@ -267,7 +267,7 @@ export const AboutSection: React.FC = () => {
                   </div>
                   <div className="flex items-center gap-1.5 shrink-0">
                     <a
-                      href="/Kailash Kumar B - TP.pdf"
+                      href="/Technical%20Profile.pdf"
                       target="_blank"
                       rel="noopener noreferrer"
                       title="View Technical Profile in new tab"
@@ -277,8 +277,8 @@ export const AboutSection: React.FC = () => {
                       <ExternalLink size={10} />
                     </a>
                     <a
-                      href="/Kailash Kumar B - TP.pdf"
-                      download="Kailash_Kumar_B_Technical_Profile.pdf"
+                      href="/Technical%20Profile.pdf"
+                      download="Kailash_Kumar_Technical_Profile.pdf"
                       title="Download Technical Profile PDF"
                       className="p-1.5 rounded-lg bg-black hover:bg-neutral-800 text-white transition-all shadow-3xs cursor-pointer inline-flex items-center"
                     >
